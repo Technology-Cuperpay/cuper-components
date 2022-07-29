@@ -41,7 +41,7 @@ export const Currency: FC<CurrencyProps> = (props) => {
         setDecimal(values[1]);
       }
     }
-  }, []);
+  }, [amount]);
 
   return (
     <Typography variant={variant} display={"inherit"}>
