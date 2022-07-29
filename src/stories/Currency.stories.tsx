@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Currency } from '../components/atoms/Currency';
+import Currency from '../components/atoms/Currency';
 
 export default {
   title: 'Atoms/Currency',

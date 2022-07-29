@@ -2,7 +2,7 @@ import React from 'react';
 import { FC, useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 
-interface CurrencyProps {
+export interface CurrencyProps {
   variant:
   | "h1"
   | "h2"
@@ -21,7 +21,7 @@ interface CurrencyProps {
 amount: number;
 }
 
-export const Currency: FC<CurrencyProps> = (props) => {
+const Currency = (props: CurrencyProps) => {
   const { variant, amount } = props;
   const [value, setValue] = useState("");
   const [decimal, setDecimal] = useState("");
@@ -61,3 +61,5 @@ export const Currency: FC<CurrencyProps> = (props) => {
   </Typography>
   );
 };
+
+export default Currency;
