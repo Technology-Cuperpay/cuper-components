@@ -1,24 +1,13 @@
-import React from 'react';
-import { FC, useEffect, useState } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
+import { Variant } from "../../types/Variant";
+import { createTheme } from "../../theme";
+import { ThemeProvider } from "@mui/material/styles";
 
 export interface CurrencyProps {
-  variant:
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | "subtitle1"
-  | "subtitle2"
-  | "body1"
-  | "body2"
-  | "caption"
-  | "button"
-  | "overline"
-  | "inherit";
-amount: number;
+  variant: Variant;
+  amount: number;
 }
 
 const Currency = (props: CurrencyProps) => {
@@ -34,7 +23,6 @@ const Currency = (props: CurrencyProps) => {
   useEffect(() => {
     if (amount || amount == 0) {
       const formatted = formatter.format(amount);
-      console.log(formatted)
       const values = formatted.split(".");
       if (values.length === 2) {
         setValue(`${values[0]}.`);
@@ -44,21 +32,28 @@ const Currency = (props: CurrencyProps) => {
   }, [amount]);
 
   return (
-    <Typography variant={variant} display={"inherit"}>
-    {value}
-    <Typography
-      variant={variant}
-      sx={{
-        display: "inline",
-        position: "relative",
-        top: "-0.5em",
-        fontSize: "50% !important",
-        pt:1.5
-      }}
+    <ThemeProvider
+      theme={createTheme({
+        responsiveFontSizes: true,
+        mode: "light",
+      })}
     >
-      {decimal}
-    </Typography>
-  </Typography>
+      <Typography variant={variant} display={"inherit"}>
+        {value}
+        <Typography
+          variant={variant}
+          sx={{
+            display: "inline",
+            position: "relative",
+            top: "-0.5em",
+            fontSize: "50% !important",
+            pt: 1.5,
+          }}
+        >
+          {decimal}
+        </Typography>
+      </Typography>
+    </ThemeProvider>
   );
 };
 

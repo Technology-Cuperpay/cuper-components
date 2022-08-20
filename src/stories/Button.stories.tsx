@@ -1,20 +1,26 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Button from "../components/atoms/Button";
+import ButtonMain from "../components/atoms/ButtonMain";
 
 export default {
-  title: "ReactComponentLibrary/Button",
-  component: Button,
-} as ComponentMeta<typeof Button>;
+  title: "Atoms/ButtonMain",
+  component: ButtonMain,
+} as ComponentMeta<typeof ButtonMain>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof ButtonMain> = (args) => <ButtonMain {...args} />;
 
-export const HelloWorld = Template.bind({});
-HelloWorld.args = {
-  label: "Hello world!",
+export const Primary = Template.bind({});
+Primary.args = {
+  label: "Soy un botón primario",
+  loading: false,
+  disabled: false
 };
 
-export const ClickMe = Template.bind({});
-ClickMe.args = {
-  label: "Click me!",
+export const Secondary = Template.bind({});
+Secondary.args = {
+  label: "Soy un botón secundario",
+  variant: "outlined",
+  color: "primary",
+  loading: false,
+  disabled: false
 };
