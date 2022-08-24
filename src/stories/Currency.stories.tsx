@@ -12,6 +12,6 @@ const Template: ComponentStory<typeof Currency> = (args) => <Currency {...args} 
 
 export const Primary = Template.bind({});
 Primary.args = {
-  amount: 1000,
+  amount: 1000.333,
   variant: 'h3',
 };
