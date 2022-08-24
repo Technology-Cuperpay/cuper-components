@@ -7,8 +7,10 @@ export default {
   component: TextFieldCellphone,
 } as ComponentMeta<typeof TextFieldCellphone>;
 
-const Template: ComponentStory<typeof TextFieldCellphone> = () => <TextFieldCellphone />;
+const Template: ComponentStory<typeof TextFieldCellphone> = (args) => <TextFieldCellphone {...args}/>;
 
 export const Primary = Template.bind({});
 Primary.args = {
+  value: '',
+  helperText: '',
 };

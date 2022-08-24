@@ -9,19 +9,20 @@ export interface TextFieldProps {
   variant: "filled" | "outlined" | "standard";
   helperText: string;
   value: string;
+  handleChange: () => {};
 }
 const TextFieldCellphone = (props: TextFieldProps) => {
-  const [state, setState] = useState("");
   const { helperText, value } = props;
   const CHARACTER_LIMIT = 10;
-  const [values, setValues] = React.useState(value);
+  const [valueCellphone, setValues] = React.useState(value);
+  const [contador, setContador] = React.useState(0);
 
   const handleChange = (event: { target: { value: string; }; }) => {
     setValues(event.target.value);
+ 
     const cellphone = event.target.value.replace(/[^0-9]+/g, "");
-    setState(cellphone)
-  };
-
+    setContador(cellphone.length)
+  }; 
 
   return (
     <ThemeProvider
@@ -33,8 +34,7 @@ const TextFieldCellphone = (props: TextFieldProps) => {
       <InputMask
         mask="99-9999-9999"
         disabled={false}
-        value={value}
-
+        value={valueCellphone}
         onChange={handleChange}
       >
         <TextField 
@@ -45,7 +45,7 @@ const TextFieldCellphone = (props: TextFieldProps) => {
         fullWidth
         required
         InputProps={{
-          endAdornment: <InputAdornment position="end">{`${values.name.length}/${CHARACTER_LIMIT}`}</InputAdornment>,
+          endAdornment: <InputAdornment position="end">{`${contador}/${CHARACTER_LIMIT}`}</InputAdornment>,
         }}
         margin="normal"/>
       </InputMask>

@@ -175,7 +175,8 @@ export default function GoogleAddress(props: any) {
       onChange={(event: any, newValue: PlaceType | null) => {
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
-      }}
+      }
+    }
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
@@ -183,6 +184,7 @@ export default function GoogleAddress(props: any) {
         <TextField
           {...params}
           label="Escribe tu dirección"
+          helperText="Ej: Calle, número, colonia, ciudad, estado"
           fullWidth
           inputProps={{
             ...params.inputProps,

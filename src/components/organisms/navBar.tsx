@@ -7,14 +7,12 @@ import {
   Toolbar,
   useMediaQuery,
   Typography,
-  Link,
 } from "@mui/material";
 import type { AppBarProps } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import StorefrontIcon from "@mui/icons-material/Storefront";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Avatar from "@mui/material/Avatar";
-import { grey, red } from "@mui/material/colors";
+import { grey } from "@mui/material/colors";
 import React from "react";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
@@ -175,7 +173,7 @@ const AccountButton = () => {
   );
 };
 
-const NavBar: FC<DashboardNavbarProps> = (props) => {
+export default function NavBar(props:DashboardNavbarProps) {
   const { onOpenSidebar, authorized, register, callBack } = props;
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
@@ -222,4 +220,3 @@ NavBar.propTypes = {
   onOpenSidebar: PropTypes.func,
 };
 
-export default NavBar;

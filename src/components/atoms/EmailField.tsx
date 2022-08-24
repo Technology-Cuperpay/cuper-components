@@ -4,8 +4,13 @@ import { ThemeProvider } from "@mui/material/styles";
 import { TextField } from "@mui/material";
 import * as yup from "yup";
 
-const TextFieldEmail = () => {
-  const [state, setState] = useState("");
+export interface TextFieldProps {
+  value: string;
+}
+
+const EmailField = (props: TextFieldProps) => {
+  const { value } = props;
+  const [state, setState] = useState(value);
   const [isValid, setIsValid] = useState(true);
 
   const schema = yup.object().shape({
@@ -46,4 +51,4 @@ const TextFieldEmail = () => {
     </ThemeProvider>
   );
 };
-export default TextFieldEmail;
+export default EmailField;

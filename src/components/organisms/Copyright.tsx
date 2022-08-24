@@ -1,14 +1,12 @@
-import type { FC } from "react";
-import PropTypes from "prop-types";
+import React from "react";
 import {
   Link,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 
-const Copyright: FC = () => {
+export default function Copyright() {
 
   return (
     <>
@@ -18,11 +16,12 @@ const Copyright: FC = () => {
           mode: "light",
         })}
       >
-        <Typography variant="body1" color="text.secondary" align="center">
+        <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://cuperpay.com/">
-                Cuper
-            </Link>{' '}
+            <Link href="https://cuperpay.com/"  sx={{ color:"text.secondary" }} target="_blank" rel="noopener">
+            Cuper
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -31,8 +30,3 @@ const Copyright: FC = () => {
   );
 };
 
-Copyright.propTypes = {
-  onOpenSidebar: PropTypes.func,
-};
-
-export default Copyright;

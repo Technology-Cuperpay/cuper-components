@@ -15,7 +15,7 @@ export interface ButtonProps {
   onClick: () => void;
 }
 
-const ButtonMain = (props: ButtonProps) => {
+export default function ButtonMain (props: ButtonProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const { label, variant, loading, disabled, color, onClick} = props;
@@ -34,7 +34,7 @@ const ButtonMain = (props: ButtonProps) => {
         color={color? color : 'primary'}
         onClick={onClick}
       >
-        {label}
+        {label?label:'Continuar'}
         {props.loading && (
           <CircularProgress
             size={24}
@@ -51,5 +51,3 @@ const ButtonMain = (props: ButtonProps) => {
     </ThemeProvider>
   );
 };
-
-export default ButtonMain;

@@ -1,31 +1,36 @@
-import type { FC } from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
+  Container,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Link,
   Typography,
 } from "@mui/material";
-import React from "react";
+
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 import LockIcon from "@mui/icons-material/Lock";
+import Copyright from "./Copyright";
+import DocPrivacity from "../atoms/DocPrivacity";
 
-const Privacity: FC = () => {
-  const [openDialogPrivacity, setOpenDialogPrivacity] = React.useState(false);
+export default function Privacity() {
+  const [open, setOpen] = React.useState(false);
 
-  const handleClickOpenPrivacity = () => () => {
-    setOpenDialogPrivacity(true);
+  const handleClickOpen = () => {
+    setOpen(true);
   };
 
-  const handleClosePrivacity = () => {
-    setOpenDialogPrivacity(false);
+  const handleClose = () => {
+    setOpen(false);
   };
+
   return (
-    <>
+    <Fragment>
       <ThemeProvider
         theme={createTheme({
           responsiveFontSizes: true,
@@ -33,24 +38,30 @@ const Privacity: FC = () => {
         })}
       >
         <Box
-          alignItems="center"
-          sx={{ display: "flex", flexDirection: "column"}}
-          component="main"
-            
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
           <LockIcon color="action" />
-          <Typography variant="caption" color="text.secondary" align="center">
-            Toda la información proporcionada será utilizada con fines de
-            consulta y no se compartirá. Consulta nuestro
-            <Button  onClick={handleClickOpenPrivacity}>
-              &nbsp; Aviso de Privacidad.
-            </Button>
-          </Typography>
-        
+          <Container
+            sx={{ maxWidth: "56ch", textAlign: "center", mt: 1, mb: 2 }}
+          >
+            <Typography variant="caption" color="text.secondary" align="center">
+              Toda la información proporcionada será utilizada con fines de
+              consulta y no se compartirá con nadie. Consulta nuestro &nbsp;
+              <Link onClick={handleClickOpen} sx={{ color: "text.secondary" }}>
+                Aviso de Privacidad.
+              </Link>
+            </Typography>
+          </Container>
+          <Copyright />
+        </Box>
 
         <Dialog
-          open={openDialogPrivacity}
-          onClose={handleClosePrivacity}
+          open={open}
+          onClose={handleClose}
           scroll={"paper"}
           aria-labelledby="scroll-dialog-title"
           aria-describedby="scroll-dialog-description"
@@ -60,17 +71,16 @@ const Privacity: FC = () => {
           </DialogTitle>
           <DialogContent dividers={true}>
             <DialogContentText id="scroll-dialog-description" tabIndex={-1}>
-              <Privacity />
+              <DocPrivacity />
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClosePrivacity}>Cerrar</Button>
+            <Button onClick={handleClose}>Cerrar</Button>
           </DialogActions>
         </Dialog>
-        </Box>
-      </ThemeProvider>
-    </>
-  );
-};
 
-export default Privacity;
+        <div></div>
+      </ThemeProvider>
+    </Fragment>
+  );
+}

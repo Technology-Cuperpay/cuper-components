@@ -1,7 +1,5 @@
-//import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import React, { useEffect, useReducer } from "react";
-import { Divider, Box, Container, useMediaQuery } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import GoogleAddress from "../../modules/GoogleAddress";
 import { Customer } from "../../types/Customer";
@@ -16,7 +14,7 @@ export interface AutoCompleteAction {
 
 function autoCompleteReducer(state: Customer, action: AutoCompleteAction) {
   const { type, payload } = action;
-
+  console.log('action.type',action.type)
   switch (action.type) {
     case "loaded": {
       return {
@@ -43,7 +41,7 @@ const initialState = {
   addressCity: ''
 } as Customer;
 
-const InputGoogleAddress = (props: any) => {
+export default function InputGoogleAddress (props: any) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const [autoCompleteState, dispatchAutoComplete] = useReducer(autoCompleteReducer, initialState);
@@ -68,6 +66,8 @@ const InputGoogleAddress = (props: any) => {
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
+        console.log('values',values)
+
         console.log("values ----->", values);
       } catch (err) {
         console.error(err);
@@ -77,28 +77,18 @@ const InputGoogleAddress = (props: any) => {
     },
   });
 
+  useEffect(() => {
+    console.log('autoCompleteState',autoCompleteState)
+  },[autoCompleteState])
+
   return (
-    <>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: mobileDevice ? 1 : 3,
         }}
       >
-        <Container maxWidth="md">
-          <form onSubmit={formik.handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={12} sx={{ mb: 4 }}>
-                <GoogleAddress dispatchAutoComplete={dispatchAutoComplete} 
-                onChange={formik.handleChange}/>
-              </Grid>
-            </Grid>
-          </form>
-        </Container>
+        <GoogleAddress dispatchAutoComplete={dispatchAutoComplete} />
       </Box>
-    </>
   );
 };
-
-export default InputGoogleAddress;
