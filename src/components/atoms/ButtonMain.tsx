@@ -12,13 +12,14 @@ export interface ButtonProps {
   color: Color;
   loading: boolean;
   disabled: boolean;
-  onClick: () => void;
+  //onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  type: boolean;
 }
 
 export default function ButtonMain (props: ButtonProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const { label, variant, loading, disabled, color, onClick} = props;
+  const { label, variant, loading, disabled, color, type} = props;
 
   return (
     <ThemeProvider
@@ -32,7 +33,8 @@ export default function ButtonMain (props: ButtonProps) {
         disabled={loading || disabled}
         fullWidth={mobileDevice}
         color={color? color : 'primary'}
-        onClick={onClick}
+        //onClick={onClick}
+        type={type? "submit": 'button'}
       >
         {label?label:'Continuar'}
         {props.loading && (

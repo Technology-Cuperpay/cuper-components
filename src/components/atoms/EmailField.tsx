@@ -5,11 +5,13 @@ import { TextField } from "@mui/material";
 import * as yup from "yup";
 
 export interface TextFieldProps {
+  id: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
 }
 
 const EmailField = (props: TextFieldProps) => {
-  const { value } = props;
+  const { value, handleChange, id } = props;
   const [state, setState] = useState(value);
   const [isValid, setIsValid] = useState(true);
 
@@ -28,6 +30,7 @@ const EmailField = (props: TextFieldProps) => {
     } else {
       setIsValid(false);
     }
+    handleChange(event)
   };
 
   return (
@@ -38,6 +41,7 @@ const EmailField = (props: TextFieldProps) => {
       })}
     >
       <TextField
+        id={id}
         label="Correo Electrónico"
         variant="outlined"
         type={"email"}

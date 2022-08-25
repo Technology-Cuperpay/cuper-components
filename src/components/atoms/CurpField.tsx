@@ -6,16 +6,15 @@ import { InputAdornment } from "@mui/material";
 
 export interface TextFieldProps {
   helperText: string;
+  id: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
 }
 const TextFieldText = (props: TextFieldProps) => {
-  const { helperText } = props;
+  const { helperText, id, handleChange, value } = props;
   const CHARACTER_LIMIT = 18;
   const [contador, setContador] = React.useState(0);
 
-  const handleChange = (event: any) => {
-    const value = event.target.value;
-    setContador(value.length);
-  }; 
 
   return (
     <ThemeProvider
@@ -25,9 +24,15 @@ const TextFieldText = (props: TextFieldProps) => {
       })}
     >
        <TextField
+        id={id}
         label='CURP'
         type="text"
-        onChange={handleChange}
+        value={value}
+        onChange={(e) => {
+          const value = e.target.value;
+          setContador(value.length);
+          handleChange(e)
+        }}
         helperText={helperText}
         fullWidth
         required
