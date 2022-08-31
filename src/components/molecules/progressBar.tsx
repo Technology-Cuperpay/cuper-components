@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "../../theme";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
+import { ImportantDevices } from "@mui/icons-material";
 
 export default function ProgressBar(props: any) {
   const { activeStep } = props;
@@ -21,25 +22,25 @@ export default function ProgressBar(props: any) {
         setDot2(false);
         break;
       case 2:
-        setProgress(15.33);
-        setStep(2);
+        setProgress(16.66);
+        setStep(1);
         setDot1(true);
         setDot2(false);
         break;
       case 3:
-        setProgress(33);
+        setProgress(33.33);
         setStep(2);
         setDot1(true);
         setDot2(false);
         break;
       case 4:
-        setProgress(69);
+        setProgress(66.66);
         setStep(3);
         setDot1(true);
         setDot2(true);
         break;
       case 5:
-        setProgress(86.32);
+        setProgress(83.32);
         setDot1(true);
         setDot2(true);
         break;
@@ -52,15 +53,17 @@ export default function ProgressBar(props: any) {
         mode: "light",
       })}
     >
-      <Container
+      <Box
         component="main"
         maxWidth="md"
-        sx={{ position: "relative", p:0 }}
+        sx={{ position: "relative", px:0 }}
       >
+      
         <Paper
           variant="outlined"
           sx={{
             border: "0px",
+            p:0 
           }}
         >
           <Box textAlign="center" marginBottom={1}>
@@ -70,7 +73,7 @@ export default function ProgressBar(props: any) {
             sx={{
               position: "absolute",
               top: 30,
-              left: 23,
+              left: 0,
               fontSize: "8px",
               zIndex: 8,
             }}
@@ -103,7 +106,7 @@ export default function ProgressBar(props: any) {
             sx={{ height: 5 }}
           />
         </Paper>
-      </Container>
+        </Box>
     </ThemeProvider>
   );
 }

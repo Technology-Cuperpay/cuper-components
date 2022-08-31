@@ -18,7 +18,7 @@ export default function Copyright() {
       >
         <Typography variant="body2" color="text.secondary" align="center">
             {'Copyright © '}
-            <Link href="https://cuperpay.com/"  sx={{ color:"text.secondary" }} target="_blank" rel="noopener">
+            <Link href="https://cuperpay.com/"  sx={{ color:"text.secondary", textDecorationLine: 'underline' }} target="_blank" rel="noopener">
             Cuper
             </Link>
             {' '}

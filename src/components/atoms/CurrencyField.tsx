@@ -6,23 +6,26 @@ import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 
 interface CustomProps {
-  onChange: (event: { target: { label: string; value: string } }) => void;
   label: string;
-  
+  value: string
+  id: string;
+  handleChange: any;
+  helperText: string;
 }
 
 const NumberFormatCustom = React.forwardRef<
   NumberFormat<InputAttributes>,
   CustomProps
 >(function NumberFormatCustom(props, ref) {
-  const { onChange, label, ...other } = props;
+  const { handleChange, label, ...other } = props;
 
   return (
     <NumberFormat
       {...other}
       getInputRef={ref}
+      decimalScale={2}
       onValueChange={(values) => {
-        onChange({
+        handleChange({
           target: {
             label: label,
             value: values.value,
@@ -40,17 +43,18 @@ interface State {
   numberformat: string;
 }
 
-export default function TextFieldCurrency  (props: CustomProps) {
-    const { label } = props;
+export default function CurrencyField  (props: CustomProps) {
+    const { label,id, handleChange,helperText } = props;
     const [values, setValues] = React.useState<State>({
-        numberformat: '1320',
+        numberformat: '',
     });
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleValidate = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({
       ...values,
-      [event.target.name]: event.target.value,
+      [event.target.name]: parseInt(event.target.value).toFixed(2),
     });
+    handleChange(event.target.value)
   };
 
   return (
@@ -62,11 +66,13 @@ export default function TextFieldCurrency  (props: CustomProps) {
   >
     <Box>
       <TextField
+      id={id}
         label={label}
         type={"tel"}
         required
-        //value={values.numberformat}
-        onChange={handleChange}
+        value={values}
+        onChange={handleValidate}
+        helperText={helperText}
         InputProps={{
           inputComponent: NumberFormatCustom as any,
         }}

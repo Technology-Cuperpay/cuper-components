@@ -8,18 +8,20 @@ import { ThemeProvider } from "@mui/material/styles";
 
 export interface ButtonProps {
   label: string;
-  variant: "text" | "outlined" | "contained" | undefined;
-  color: Color;
+  variant?: "text" | "outlined" | "contained" | undefined;
+  color?: Color;
   loading: boolean;
   disabled: boolean;
-  //onClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   type: boolean;
+  fullWidth: boolean;
+  sx?: any;
 }
 
 export default function ButtonMain (props: ButtonProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const { label, variant, loading, disabled, color, type} = props;
+  const { label, variant, loading, disabled, color, type, fullWidth, sx, onClick} = props;
 
   return (
     <ThemeProvider
@@ -31,10 +33,11 @@ export default function ButtonMain (props: ButtonProps) {
       <Button
         variant={variant? variant: 'contained'}
         disabled={loading || disabled}
-        fullWidth={mobileDevice}
+        fullWidth={mobileDevice || fullWidth}
         color={color? color : 'primary'}
         //onClick={onClick}
         type={type? "submit": 'button'}
+        sx={sx}
       >
         {label?label:'Continuar'}
         {props.loading && (

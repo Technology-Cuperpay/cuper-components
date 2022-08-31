@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/technology-cuperpay"
   },
-  "version": "1.0.30",
+  "version": "1.1.8",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,6 +21,7 @@
     "@mui/material": "^5.4.0",
     "@rollup/plugin-commonjs": "^22.0.1",
     "@rollup/plugin-image": "^2.1.1",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.4",
     "@storybook/addon-actions": "^6.5.10",
@@ -57,6 +58,8 @@
   "dependencies": {
     "@technology-cuperpay/cuper-components": "^1.0.20",
     "formik": "^2.2.9",
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.37",
     "yup": "^0.32.11"
   }
 }

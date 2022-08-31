@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { Variant } from "../../types/Variant";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { formatter } from "../../utils/currencyUtil";
 
 export interface CurrencyProps {
   variant: Variant;
@@ -14,11 +15,7 @@ const Currency = (props: CurrencyProps) => {
   const { variant, amount } = props;
   const [value, setValue] = useState("");
   const [decimal, setDecimal] = useState("");
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  });
+  
 
   useEffect(() => {
     if (amount || amount == 0) {

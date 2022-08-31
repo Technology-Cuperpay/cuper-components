@@ -3,6 +3,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 const packageJson = require("./package.json");
 import image from '@rollup/plugin-image';
+import json from '@rollup/plugin-json';
 
 
 export default [
@@ -25,6 +26,7 @@ export default [
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       image(),
+      json(),
     ],
     external: ['react', 'react-dom']
   }

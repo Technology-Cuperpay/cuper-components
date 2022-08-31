@@ -32,13 +32,15 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import GavelIcon from "@mui/icons-material/Gavel";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
+import { TermsModal } from "../molecules";
 
 
 export interface DashboardNavbarProps extends AppBarProps {
-  onOpenSidebar?: () => void;
+  logout: () => void;
   authorized: boolean;
   register: boolean;
   callBack: () => void;
+  handleHelp: () => void;
 }
 
 interface AccountPopoverProps {
@@ -46,13 +48,13 @@ interface AccountPopoverProps {
   onClose?: () => void;
   open?: boolean;
   handleLogout: () => void;
+  logout: () => void;
+  handleHelp: () => void;
 }
 
 export const AccountPopover: FC<AccountPopoverProps> = (props) => {
-  const { anchorEl, onClose, open, handleLogout, ...other } = props;
-  //const { logout } = useAuth();
-  // To get the user from the authContext, you can use
-  //const { user } = useAuth();
+  const { anchorEl, onClose, open, handleLogout, logout, handleHelp, ...other } = props;
+  
 
   return (
     <Popover
@@ -78,6 +80,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
             <Typography color="primary" variant="body1">
               Ayuda
             </Typography>}
+            onClick={handleHelp}
           />
         </MenuItem>
 
@@ -87,9 +90,8 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <Typography color="primary" variant="body1">
-                Términos y Condiciones
-              </Typography>
+              <TermsModal color="primary" variant/>
+             
             }
           />
         </MenuItem>
@@ -99,8 +101,9 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           <ListItemIcon>
             <LogoutIcon color="primary"/>
           </ListItemIcon>
-          <ListItemText
+          <ListItemText 
             primary={<Typography color="primary" variant="body1">Cerrar sesión</Typography>}
+            onClick={logout}
           />
         </MenuItem>
       </Box>
@@ -114,12 +117,13 @@ AccountPopover.propTypes = {
   open: PropTypes.bool,
 };
 
-const AccountButton = () => {
+const AccountButton = (props:any) => {
   const anchorRef = useRef<HTMLButtonElement | null>(null);
   const [openPopover, setOpenPopover] = useState<boolean>(false);
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const accent = grey["A100"];
+  const { logout, handleHelp } =  props;
 
   const handleOpenPopover = (): void => {
     setOpenPopover(true);
@@ -168,13 +172,15 @@ const AccountButton = () => {
         onClose={handleClosePopover}
         open={openPopover}
         handleLogout={handleLogout}
+        logout={logout}
+        handleHelp={handleHelp}
       />
     </>
   );
 };
 
 export default function NavBar(props:DashboardNavbarProps) {
-  const { onOpenSidebar, authorized, register, callBack } = props;
+  const { logout, authorized, register, callBack, handleHelp} = props;
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -190,8 +196,12 @@ export default function NavBar(props:DashboardNavbarProps) {
           disableGutters
           sx={{
             minHeight: 64,
+            position: 'fixed', 
+            top: 0, 
+            right: 0, 
             left: 0,
             px: 2,
+            zIndex:999,
             bgcolor: register ? "primary.main" : "white",
             justifyContent:
               mobileDevice || authorized ? "space-between" : "left",
@@ -199,7 +209,7 @@ export default function NavBar(props:DashboardNavbarProps) {
              
           }}
         >
-          {mobileDevice ? (
+          {mobileDevice && authorized ? (
             <Box sx={{ alignItems: "center", display: "flex" }} onClick={callBack}>
               <ChevronLeftIcon fontSize="small" color="primary" />
             </Box>
@@ -209,7 +219,7 @@ export default function NavBar(props:DashboardNavbarProps) {
           </Box>
           
 
-          {authorized ? <AccountButton /> : null}
+          {authorized ? <AccountButton logout={logout} handleHelp={handleHelp}/> : null}
         </Toolbar>
       </ThemeProvider>
     </>

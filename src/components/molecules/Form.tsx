@@ -1,37 +1,53 @@
-import { Box, Button, Container, Paper, Typography } from "@mui/material";
-import LinearProgress from "@mui/material/LinearProgress";
-import React, { useEffect } from "react";
+import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import { createTheme } from "../../theme";
-import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import {ButtonMain, CurpField, EmailField, TextFieldCellphone} from "../atoms";
+import {
+  ButtonMain,
+  CellphoneField,
+  CurpField,
+  CurrencyField,
+  DateField,
+  EmailField,
+} from "../atoms";
+import ProgressBar from "./progressBar";
+import { Navbar } from "../organisms";
+import PrivacityModal from "./PrivacityModal";
+import TermsModal from "./TermsModal";
 
 export default function Form(props: any) {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const formik = useFormik({
     initialValues: {
-      mobilePhone: "",
+      //mobilePhone: "",
+      //email: "",
+      curp: "",
+      currency: "",
       submit: null,
     },
     validationSchema: Yup.object({
-      mobilePhone: Yup.string().required("Requerido"),
+     // mobilePhone: Yup.string().required("Requerido"),
+      //email: Yup.string().required("Requerido"),
+      //curp: Yup.string().required("Requerido"),
+      currency: Yup.string().required("Requerido"),
 
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
-        console.log('values',values)
+        console.log("values", values);
+        setIsSubmitting(true);
         helpers.setStatus({ success: true });
         helpers.setSubmitting(false);
       } catch (err: any) {
+        setIsSubmitting(false);
         //onErrorForm(err);
         helpers.setStatus({ success: false });
         helpers.setSubmitting(false);
       }
     },
   });
-  
   return (
     <ThemeProvider
       theme={createTheme({
@@ -39,35 +55,64 @@ export default function Form(props: any) {
         mode: "light",
       })}
     >
+      <Navbar authorized={true} register={false} callBack={function (): void {
+        throw new Error("Function not implemented.");
+      } } logout={function (): void {
+        throw new Error("Function not implemented.");
+      } } handleHelp={function (): void {
+        throw new Error("Function not implemented.");
+      } }/>
+      <ProgressBar activeStep={1}/>
       <form onSubmit={formik.handleSubmit}>
-        {/* <TextFieldCellphone 
+        {/* <CellphoneField
         id="mobilePhone"
         helperText={"Texto de ayuda"} 
         value={formik.values.mobilePhone} 
-        handleChange={formik.handleChange} /> */}
+        handleChange={formik.handleChange} 
+        handleBlur={formik.handleBlur}
+        touched={Boolean(formik.touched.mobilePhone)}
+        sx={{mt:5}}/> */}
 
-     {/*  <CurpField 
+        {/* <CurpField 
+          id="curp"
+          value={formik.values.curp}
+          handleChange={formik.handleChange}
+          disabled={false} 
+          handleBlur={formik.handleBlur} 
+          touched={Boolean(formik.touched.curp)}            
+          /> */}
+
+       {/*  <EmailField
+          id="email"
+          value={formik.values.email}
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          touched={Boolean(formik.touched.email)}
+          sx={{ mb: 5 }}
+        /> */}
+
+        {/* <DateField
         id="mobilePhone"
-        helperText={"Texto de ayuda"} 
         value={formik.values.mobilePhone} 
         handleChange={formik.handleChange} /> */}
 
-        <EmailField 
-        id="mobilePhone"
-        value={formik.values.mobilePhone} 
-        handleChange={formik.handleChange} />
+        <CurrencyField
+          id="currency"
+          label="Ingresos"
+          value={formik.values.currency}
+          handleChange={formik.handleChange}
+          helperText="CAMBIAR TEXTO"/>
 
-        {/* <ButtonMain
-                type={true}
-                fullWidth
-                variant="contained"
-                label="Enviar"
-                loading={false}
-                //onClick={(e) => {}}
-                disabled={false}
-              >
-                
-              </ButtonMain> */}
+        <ButtonMain
+        fullWidth={true}
+          type={true}
+          variant="contained"
+          label="Enviar"
+          loading={isSubmitting}
+          //onClick={(e) => {}}
+          disabled={isSubmitting} 
+          color={undefined}        
+          ></ButtonMain>
       </form>
     </ThemeProvider>
   );
