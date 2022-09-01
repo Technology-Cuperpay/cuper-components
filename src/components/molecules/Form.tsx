@@ -101,6 +101,8 @@ export default function Form(props: any) {
           label="Ingresos"
           value={formik.values.currency}
           handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          touched={Boolean(formik.touched.currency)}
           helperText="CAMBIAR TEXTO"/>
 
         <ButtonMain

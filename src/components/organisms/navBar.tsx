@@ -11,13 +11,11 @@ import {
 import type { AppBarProps } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import Avatar from "@mui/material/Avatar";
 import { grey } from "@mui/material/colors";
 import React from "react";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { Logo as LogoIcon } from "../../icons/logo";
-import { Menu as MenuIcon } from "../../icons/menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import {
   Divider,
@@ -27,7 +25,7 @@ import {
   Popover,
 } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { UserCircle, UserCircle as UserCircleIcon } from "../../icons/user-circle";
+import { UserCircle } from "../../icons/user-circle";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import HelpIcon from "@mui/icons-material/Help";
 import GavelIcon from "@mui/icons-material/Gavel";
@@ -41,6 +39,7 @@ export interface DashboardNavbarProps extends AppBarProps {
   register: boolean;
   callBack: () => void;
   handleHelp: () => void;
+  isCallBack?: boolean;
 }
 
 interface AccountPopoverProps {
@@ -50,6 +49,7 @@ interface AccountPopoverProps {
   handleLogout: () => void;
   logout: () => void;
   handleHelp: () => void;
+  isCallBack?: boolean;
 }
 
 export const AccountPopover: FC<AccountPopoverProps> = (props) => {
@@ -123,7 +123,7 @@ const AccountButton = (props:any) => {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
   const accent = grey["A100"];
-  const { logout, handleHelp } =  props;
+  const { logout, handleHelp, register } =  props;
 
   const handleOpenPopover = (): void => {
     setOpenPopover(true);
@@ -147,22 +147,19 @@ const AccountButton = (props:any) => {
         sx={{
           alignItems: "center",
           display: "flex",
-          ml: 2,
         }}
       >
         {mobileDevice ? (
           !openPopover ? 
-          <MenuRoundedIcon color="primary"/>
-          : <CloseOutlinedIcon color="primary"/>
+          <MenuRoundedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
+          : <CloseOutlinedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
         ) : (
           <Box display="flex" flexDirection="row">
-            <Box>
-              <Avatar sx={{ bgcolor: accent, width: 31, height: 31, mr: 1.5 }}>
-                <UserCircle color="primary"/>
-              </Avatar>
+            <Box  display="flex" alignItems="center" sx={{ mr: 1.5, width: 31, height: 31, }}>
+                <UserCircle htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
             </Box>           
             <Box sx={{ pt: 0.3 }}>
-              <KeyboardArrowDownIcon color="primary"/>
+              <KeyboardArrowDownIcon htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
             </Box>
           </Box>
         )}
@@ -180,7 +177,7 @@ const AccountButton = (props:any) => {
 };
 
 export default function NavBar(props:DashboardNavbarProps) {
-  const { logout, authorized, register, callBack, handleHelp} = props;
+  const { logout, authorized, register, callBack, handleHelp, isCallBack} = props;
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -200,26 +197,26 @@ export default function NavBar(props:DashboardNavbarProps) {
             top: 0, 
             right: 0, 
             left: 0,
-            px: 2,
+            px: mobileDevice ? 2 : 10,
             zIndex:999,
             bgcolor: register ? "primary.main" : "white",
             justifyContent:
-              mobileDevice || authorized ? "space-between" : "left",
+               authorized ? "space-between" : mobileDevice ? "center" : "left",
             boxShadow:3
              
           }}
         >
-          {mobileDevice && authorized ? (
+          {mobileDevice && isCallBack ? (
             <Box sx={{ alignItems: "center", display: "flex" }} onClick={callBack}>
-              <ChevronLeftIcon fontSize="small" color="primary" />
+              <ChevronLeftIcon fontSize="small" htmlColor={register ? "#FFFFFF" : "#5757CF"} />
             </Box>
           ) : null}
-          <Box sx={{ alignItems: "center", display: "flex" }}>
+          <Box sx={{ alignItems: "center", display: "flex", width:"100%", justifyContent:mobileDevice ? "center" : "left" }}>
             <LogoIcon variant={register ? "primary" : "light"} />
           </Box>
           
 
-          {authorized ? <AccountButton logout={logout} handleHelp={handleHelp}/> : null}
+          {authorized ? <AccountButton logout={logout} handleHelp={handleHelp} register={register} isCallBack={isCallBack}/> : null}
         </Toolbar>
       </ThemeProvider>
     </>

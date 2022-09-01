@@ -4,7 +4,7 @@ import React from 'react';
 export const UserCircle = createSvgIcon(
   <svg
     viewBox="0 0 20 20"
-    fill="currentColor"
+    fill="primary ? primary : currentColor"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path

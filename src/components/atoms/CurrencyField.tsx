@@ -1,84 +1,80 @@
-import * as React from 'react';
-import NumberFormat, { InputAttributes } from 'react-number-format';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import * as React from "react";
+import NumberFormat from "react-number-format";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { InputAdornment } from "@mui/material";
+import * as yup from "yup";
 
 interface CustomProps {
-  label: string;
-  value: string
   id: string;
-  handleChange: any;
-  helperText: string;
+  label: string;
+  value: string;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleBlur: any;
+  helperText?: string;
+  touched:boolean;
+  sx?: any;
 }
 
-const NumberFormatCustom = React.forwardRef<
-  NumberFormat<InputAttributes>,
-  CustomProps
->(function NumberFormatCustom(props, ref) {
-  const { handleChange, label, ...other } = props;
 
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={ref}
-      decimalScale={2}
-      onValueChange={(values) => {
-        handleChange({
-          target: {
-            label: label,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      prefix="$"
-    />
-  );
-});
+export default function CurrencyField(props: CustomProps) {
+  const { label, id, handleChange, helperText, handleBlur, sx, value, touched } = props;
+  const [isValid, setIsValid] = React.useState(false);
+  const [error, setError] = React.useState("Este campo es obligatorio");
 
-interface State {
-  numberformat: string;
-}
+  const schema = yup.object().shape({
+    currency: yup.string().required("Este campo es obligatorio"),
+  });
 
-export default function CurrencyField  (props: CustomProps) {
-    const { label,id, handleChange,helperText } = props;
-    const [values, setValues] = React.useState<State>({
-        numberformat: '',
-    });
-
-  const handleValidate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValues({
-      ...values,
-      [event.target.name]: parseInt(event.target.value).toFixed(2),
-    });
-    handleChange(event.target.value)
+  const handleValidate = async (event: any) => {
+      let value = event.target.value;
+      handleChange(event);
+      await schema.validate({ currency: value })
+      .then(() => {
+          setIsValid(true);
+      })
+      .catch((err) => {
+        setIsValid(false);
+        setError(err.errors[0])
+      });
+      
   };
 
   return (
     <ThemeProvider
-    theme={createTheme({
-      responsiveFontSizes: true,
-      mode: "light",
-    })}
-  >
-    <Box>
-      <TextField
-      id={id}
-        label={label}
-        type={"tel"}
-        required
-        value={values}
-        onChange={handleValidate}
-        helperText={helperText}
-        InputProps={{
-          inputComponent: NumberFormatCustom as any,
-        }}
-        variant="outlined"
-      />
-    </Box>
+      theme={createTheme({
+        responsiveFontSizes: true,
+        mode: "light",
+      })}
+    >
+      <Box>
+        <NumberFormat
+          id={id}
+          label={label}
+          customInput={TextField}
+          error={touched && !isValid}
+          fullWidth
+          helperText={touched && !isValid ? error : helperText}
+          margin="none"
+          required
+          onBlur={handleBlur}
+          value={value}
+          isNumericString={true}
+          thousandSeparator={true}
+          decimalSeparator="."
+          allowNegative={false}
+          decimalScale={2}
+          type="tel"
+          onChange={handleValidate}
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+          }}
+          sx={sx}
+        />
+       
+      </Box>
     </ThemeProvider>
   );
 }

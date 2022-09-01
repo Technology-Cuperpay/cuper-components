@@ -12,5 +12,6 @@ const Template: ComponentStory<typeof NavBar> = (args) => <NavBar {...args}/>;
 export const Primary = Template.bind({});
 Primary.args = {
   register: false,
-  authorized: true
+  authorized: true,
+  isCallBack: true
 };
