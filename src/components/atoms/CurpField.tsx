@@ -27,21 +27,31 @@ const TextFieldText = (props: TextFieldProps) => {
   const schema = yup.object().shape({
     curp: yup.string().required("Este campo es obligatorio").min(18, 'Tu CURP debe estar conformado por 18 caracteres.'),
   });
-
-  const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.target.value = event.target.value.toUpperCase();
-    handleChange(event)
-    setContador(event.target.value.length);
-
-    await schema.validate({ curp: event.target.value })
+  
+  const validateSchema = async (value:string) => {
+    await schema.validate({ curp: value })
     .then(() => {
         setIsValid(true);
     })
     .catch((err) => {
       setIsValid(false);
       setError(err.errors[0])
-      console.log('err.errors[0]',err.errors[0])
     });
+  }
+
+  React.useEffect( () => {
+    if(touched){
+      validateSchema(value)
+    }
+    
+  },[touched])
+
+  const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    event.target.value = event.target.value.toUpperCase();
+    handleChange(event)
+    setContador(event.target.value.length);
+
+    validateSchema(event.target.value)
   };
 
   return (

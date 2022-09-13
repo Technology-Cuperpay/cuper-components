@@ -21,17 +21,19 @@ export default function Form(props: any) {
 
   const formik = useFormik({
     initialValues: {
-      //mobilePhone: "",
-      //email: "",
+      mobilePhone: "",
+      email: "",
       curp: "",
       currency: "",
+      date: "",
       submit: null,
     },
     validationSchema: Yup.object({
-     // mobilePhone: Yup.string().required("Requerido"),
-      //email: Yup.string().required("Requerido"),
-      //curp: Yup.string().required("Requerido"),
+     mobilePhone: Yup.string().required("Requerido"),
+      email: Yup.string().required("Requerido"),
+      curp: Yup.string().required("Requerido"),
       currency: Yup.string().required("Requerido"),
+      date: Yup.string().required("Requerido").min(10),
 
     }),
     onSubmit: async (values, helpers): Promise<void> => {
@@ -55,55 +57,57 @@ export default function Form(props: any) {
         mode: "light",
       })}
     >
-      <Navbar authorized={true} register={false} callBack={function (): void {
+      {/* <Navbar authorized={true} register={false} callBack={function (): void {
         throw new Error("Function not implemented.");
       } } logout={function (): void {
         throw new Error("Function not implemented.");
       } } handleHelp={function (): void {
         throw new Error("Function not implemented.");
-      } }/>
+      } }/> */}
       <ProgressBar activeStep={1}/>
       <form onSubmit={formik.handleSubmit}>
-        {/* <CellphoneField
+        <CellphoneField
         id="mobilePhone"
         helperText={"Texto de ayuda"} 
         value={formik.values.mobilePhone} 
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
         touched={Boolean(formik.touched.mobilePhone)}
-        sx={{mt:5}}/> */}
+        sx={{mt:5}}/>
 
-        {/* <CurpField 
+        <CurpField 
           id="curp"
           value={formik.values.curp}
           handleChange={formik.handleChange}
           disabled={false} 
           handleBlur={formik.handleBlur} 
           touched={Boolean(formik.touched.curp)}            
-          /> */}
+          />
 
-       {/*  <EmailField
+        <EmailField
           id="email"
           value={formik.values.email}
           handleChange={formik.handleChange}
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.email)}
           sx={{ mb: 5 }}
-        /> */}
+        />
 
-        {/* <DateField
-        id="mobilePhone"
-        value={formik.values.mobilePhone} 
-        handleChange={formik.handleChange} /> */}
+        <DateField
+        id="date"
+        value={formik.values.date} 
+        handleChange={formik.handleChange} 
+        handleBlur={formik.handleBlur}
+        touched={Boolean(formik.touched.date)}/>
 
-        <CurrencyField
+         <CurrencyField
           id="currency"
           label="Ingresos"
           value={formik.values.currency}
           handleChange={formik.handleChange}
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.currency)}
-          helperText="CAMBIAR TEXTO"/>
+          helperText="CAMBIAR TEXTO"/> 
 
         <ButtonMain
         fullWidth={true}

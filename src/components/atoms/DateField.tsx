@@ -3,16 +3,43 @@ import TextField from "@mui/material/TextField";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 import { isValidDate } from "../../utils/dateUtils";
-import { allowOnlyNumber } from "../../utils/formatUtil";
+import * as yup from "yup";
 
 export interface TextFieldProps {
   id: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  handleBlur: any;
+  helperText?: string;
+  touched:boolean;
+  sx?: any;
 }
 const TextFieldText = (props: TextFieldProps) => {
-  const { value, handleChange, id } = props;
-  const [error, setError] = useState(false);
+  const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
+  const [error, setError] = useState("");
+  const [isValid, setIsValid] = React.useState(true);
+
+  const schema = yup.object().shape({
+    date: yup.string().required("Este campo es obligatorio").min(10, 'Debes seguir el formato DD/MM/AAAA'),
+  });
+
+  const validateSchema = async (value:string) => {
+    await schema.validate({ date: value })
+    .then(() => {
+        setIsValid(true);
+    })
+    .catch((err) => {
+      setIsValid(false);
+      setError(err.errors[0])
+    });
+  }
+
+  React.useEffect( () => {
+    if(touched){
+      validateSchema(value)
+    }
+    
+  },[touched])
 
   const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.value.length === 3 && !event.target.value.includes("/")) {
@@ -39,10 +66,11 @@ const TextFieldText = (props: TextFieldProps) => {
 
     const regex = /^([0-9]*)\/?([0-9]*)\/?([0-9]*)$/;
     if (event.target.value === "" || regex.test(event.target.value)) {
-      setError(false);  
+      setIsValid(true); 
       handleChange(event);
     } else {
-      setError(true);
+      setIsValid(false);
+      setError("Debes seguir el formato DD/MM/AAAA")
     } 
 
     if(event.target.value.length === 10){
@@ -53,10 +81,12 @@ const TextFieldText = (props: TextFieldProps) => {
           parseInt(event.target.value.substring(5, 9))
         ) == false
       ) {
-        setError(true);
+        setIsValid(false);
+        setError("Fecha de nacimiento invalida")
         return;
       } 
     }
+    validateSchema(event.target.value)
     
   };
 
@@ -73,8 +103,9 @@ const TextFieldText = (props: TextFieldProps) => {
         type="tel"
         value={value}
         onChange={handleValidate}
-        error={error && !!"La Fecha de Nacimiento es inválida."}
-        helperText={error && "La Fecha de Nacimiento es inválida."}
+        onBlur={handleBlur}
+        error={touched && !isValid}
+        helperText={touched && !isValid ? error : helperText}
         inputProps={{
           maxLength: 10,
         }}

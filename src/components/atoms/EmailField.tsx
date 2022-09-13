@@ -16,24 +16,34 @@ export interface TextFieldProps {
 
 const EmailField = (props: TextFieldProps) => {
   const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
-  const [isValid, setIsValid] = React.useState(false);
-  const [error, setError] = React.useState("Este campo es obligatorio");
+  const [isValid, setIsValid] = React.useState(true);
+  const [error, setError] = React.useState("");
 
   const schema = yup.object().shape({
     email: yup.string().email("Por favor verifica tu correo electrónico").required("Este campo es obligatorio"),
   });
 
-  const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    handleChange(event)
-    await schema.validate({ email: event.target.value })
+  const validateSchema = async (value:string) => {
+    await schema.validate({ email: value })
     .then(() => {
         setIsValid(true);
     })
     .catch((err) => {
       setIsValid(false);
       setError(err.errors[0])
-      console.log('catch',err.errors[0])
     });
+  }
+
+  React.useEffect( () => {
+    if(touched){
+      validateSchema(value)
+    }
+    
+  },[touched])
+
+  const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange(event)
+    validateSchema(event.target.value)
   };
 
   return (

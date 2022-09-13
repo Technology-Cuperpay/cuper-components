@@ -3,7 +3,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/technology-cuperpay"
   },
-  "version": "1.1.14",
+  "version": "1.1.17",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -58,6 +58,7 @@
   "dependencies": {
     "@technology-cuperpay/cuper-components": "^1.0.20",
     "formik": "^2.2.9",
+    "imask": "^6.4.2",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
     "yup": "^0.32.11"

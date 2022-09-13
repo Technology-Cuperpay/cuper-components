@@ -21,25 +21,35 @@ interface CustomProps {
 
 export default function CurrencyField(props: CustomProps) {
   const { label, id, handleChange, helperText, handleBlur, sx, value, touched } = props;
-  const [isValid, setIsValid] = React.useState(false);
-  const [error, setError] = React.useState("Este campo es obligatorio");
+  const [isValid, setIsValid] = React.useState(true);
+  const [error, setError] = React.useState("");
 
   const schema = yup.object().shape({
     currency: yup.string().required("Este campo es obligatorio"),
   });
+  
+  const validateSchema = async (value:string) => {
+    await schema.validate({ currency: value })
+    .then(() => {
+        setIsValid(true);
+    })
+    .catch((err) => {
+      setIsValid(false);
+      setError(err.errors[0])
+    });
+  }
+
+  React.useEffect( () => {
+    if(touched){
+      validateSchema(value)
+    }
+    
+  },[touched])
 
   const handleValidate = async (event: any) => {
       let value = event.target.value;
       handleChange(event);
-      await schema.validate({ currency: value })
-      .then(() => {
-          setIsValid(true);
-      })
-      .catch((err) => {
-        setIsValid(false);
-        setError(err.errors[0])
-      });
-      
+      validateSchema(value)
   };
 
   return (

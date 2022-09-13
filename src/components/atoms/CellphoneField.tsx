@@ -17,12 +17,30 @@ const CellphoneField = (props: TextFieldProps) => {
   const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
   const CHARACTER_LIMIT = 10;
   const [contador, setContador] = React.useState(value.length);
-  const [isValid, setIsValid] = React.useState(false);
-  const [error, setError] = React.useState("Este campo es obligatorio");
+  const [isValid, setIsValid] = React.useState(true);
+  const [error, setError] = React.useState("");
 
   const schema = yup.object().shape({
     phoneNumber: yup.string().required("Este campo es obligatorio").min(12, 'Tu número de teléfono debe estar conformado por 10 dígitos.'),
   });
+  
+  const validateSchema = async (value:string) => {
+    await schema.validate({ phoneNumber: value })
+    .then(() => {
+        setIsValid(true);
+    })
+    .catch((err) => {
+      setIsValid(false);
+      setError(err.errors[0])
+    });
+  }
+
+  React.useEffect( () => {
+    if(touched){
+      validateSchema(value)
+    }
+    
+  },[touched])
 
   const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if(event.target.value.length === 10 && ! event.target.value.includes("-")){
@@ -51,14 +69,7 @@ const CellphoneField = (props: TextFieldProps) => {
       setError("Tu número de teléfono debe estar conformado por 10 dígitos.")
     }  
 
-    await schema.validate({ phoneNumber: event.target.value })
-    .then(() => {
-        setIsValid(true);
-    })
-    .catch((err) => {
-      setIsValid(false);
-      setError(err.errors[0])
-    });
+    validateSchema(event.target.value)
   };
 
   return (
