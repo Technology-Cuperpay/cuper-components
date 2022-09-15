@@ -16,11 +16,12 @@ interface CustomProps {
   helperText?: string;
   touched:boolean;
   sx?: any;
+  disabled?: boolean;
 }
 
 
 export default function CurrencyField(props: CustomProps) {
-  const { label, id, handleChange, helperText, handleBlur, sx, value, touched } = props;
+  const { label, id, handleChange, helperText, handleBlur, sx, value, touched, disabled } = props;
   const [isValid, setIsValid] = React.useState(true);
   const [error, setError] = React.useState("");
 
@@ -82,6 +83,7 @@ export default function CurrencyField(props: CustomProps) {
             startAdornment: <InputAdornment position="start">$</InputAdornment>,
           }}
           sx={sx}
+          disabled={disabled}
         />
        
       </Box>

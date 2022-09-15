@@ -12,10 +12,11 @@ export interface TextFieldProps {
   helperText?: string;
   touched?:boolean;
   sx?: any;
+  disabled?: boolean;
 }
 
 const EmailField = (props: TextFieldProps) => {
-  const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
+  const { id, value, handleChange, handleBlur, helperText, touched, sx, disabled } = props;
   const [isValid, setIsValid] = React.useState(true);
   const [error, setError] = React.useState("");
 
@@ -64,6 +65,7 @@ const EmailField = (props: TextFieldProps) => {
         error={touched && !isValid}
         margin="normal"
         sx={sx}
+        disabled={disabled}
         fullWidth
         required
       />

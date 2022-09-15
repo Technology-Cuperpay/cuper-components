@@ -12,9 +12,10 @@ export interface TextFieldProps {
   helperText?: string;
   touched:boolean;
   sx?: any;
+  disabled?: boolean;
 }
 const CellphoneField = (props: TextFieldProps) => {
-  const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
+  const { id, value, handleChange, handleBlur, helperText, touched, sx, disabled } = props;
   const CHARACTER_LIMIT = 10;
   const [contador, setContador] = React.useState(value.length);
   const [isValid, setIsValid] = React.useState(true);
@@ -96,6 +97,7 @@ const CellphoneField = (props: TextFieldProps) => {
         }}
         margin="normal"
         sx={sx}
+        disabled={disabled}
         fullWidth
         required
         />

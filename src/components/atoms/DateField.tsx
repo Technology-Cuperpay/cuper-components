@@ -13,9 +13,10 @@ export interface TextFieldProps {
   helperText?: string;
   touched:boolean;
   sx?: any;
+  disabled?: boolean;
 }
 const TextFieldText = (props: TextFieldProps) => {
-  const { id, value, handleChange, handleBlur, helperText, touched, sx } = props;
+  const { id, value, handleChange, handleBlur, helperText, touched, sx, disabled } = props;
   const [error, setError] = useState("");
   const [isValid, setIsValid] = React.useState(true);
 
@@ -109,6 +110,7 @@ const TextFieldText = (props: TextFieldProps) => {
         inputProps={{
           maxLength: 10,
         }}
+        disabled={disabled}
         placeholder="DD/MM/AAAA"
         fullWidth
         required

@@ -73,16 +73,17 @@ export default function Form(props: any) {
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
         touched={Boolean(formik.touched.mobilePhone)}
-        sx={{mt:5}}/>
+        sx={{mt:5}}
+        disabled={isSubmitting}/>
 
         <CurpField 
           id="curp"
           value={formik.values.curp}
           handleChange={formik.handleChange}
-          disabled={false} 
+          disabled={isSubmitting} 
           handleBlur={formik.handleBlur} 
           touched={Boolean(formik.touched.curp)}
-          error={false}            
+          error={false}          
           />
 
         <EmailField
@@ -92,6 +93,7 @@ export default function Form(props: any) {
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.email)}
           sx={{ mb: 5 }}
+          disabled={isSubmitting}
         />
 
         <DateField
@@ -100,7 +102,8 @@ export default function Form(props: any) {
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
         touched={Boolean(formik.touched.date)}
-        helperText="Debes seguir el formato DD/MM/AAAA"/>
+        helperText="Debes seguir el formato DD/MM/AAAA"
+        disabled={isSubmitting}/>
 
          <CurrencyField
           id="currency"
@@ -109,7 +112,8 @@ export default function Form(props: any) {
           handleChange={formik.handleChange}
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.currency)}
-          helperText="CAMBIAR TEXTO"/> 
+          helperText="CAMBIAR TEXTO"
+          disabled={isSubmitting}/> 
 
         <ButtonMain
         fullWidth={true}
