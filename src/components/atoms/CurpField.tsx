@@ -15,14 +15,15 @@ export interface TextFieldProps {
   sx?: any;
   loading?: boolean;
   disabled: boolean;
+  error?: boolean;
 }
 
 const TextFieldText = (props: TextFieldProps) => {
-  const { id, value, handleChange, handleBlur, helperText, touched, sx, loading, disabled } = props;
+  const { id, value, handleChange, handleBlur, helperText, touched, sx, loading, disabled, error } = props;
   const CHARACTER_LIMIT = 18;
   const [contador, setContador] = React.useState(value.length);
   const [isValid, setIsValid] = React.useState(true);
-  const [error, setError] = React.useState("");
+  const [errorLocal, setError] = React.useState("");
 
   const schema = yup.object().shape({
     curp: yup.string().required("Este campo es obligatorio").min(18, 'Tu CURP debe estar conformado por 18 caracteres.'),
@@ -68,8 +69,8 @@ const TextFieldText = (props: TextFieldProps) => {
         type="text"
         onChange={handleValidate}
         onBlur={handleBlur}
-        helperText={touched && !isValid ? error : helperText}
-        error={touched && !isValid}
+        helperText={touched && !isValid ? errorLocal : helperText}
+        error={(touched && !isValid) || error}
         margin="normal"
         disabled={disabled || loading}
         inputProps={{

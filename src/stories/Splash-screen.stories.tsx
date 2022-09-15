@@ -12,5 +12,6 @@ const Template: ComponentStory<typeof SplashScreen> = (args) => <SplashScreen {.
 export const Primary = Template.bind({});
 Primary.args = {
   title: "¡Gracias por completar tu registro!",
-  subtitle: "Estamos procesando tu Información"
+  subtitle: "Estamos procesando tu Información",
+  time: 40
 };

@@ -9,12 +9,13 @@ import Countdown from "../atoms/CountDown";
 export interface SplashScreenProps {
   title: string;
   subtitle: string;
+  time: number;
 }
 
 export default function SplashScreen(props:SplashScreenProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const { title, subtitle } = props;
+  const { title, subtitle, time } = props;
   return (
     <ThemeProvider
       theme={createTheme({
@@ -73,7 +74,7 @@ export default function SplashScreen(props:SplashScreenProps) {
               <img src={loading} alt="" height={292} width="100%"/>
           </Container>
           
-          <Countdown/>
+          <Countdown startingSeconds={time}/>
           
         </>
       </Box>

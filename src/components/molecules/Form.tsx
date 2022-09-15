@@ -81,7 +81,8 @@ export default function Form(props: any) {
           handleChange={formik.handleChange}
           disabled={false} 
           handleBlur={formik.handleBlur} 
-          touched={Boolean(formik.touched.curp)}            
+          touched={Boolean(formik.touched.curp)}
+          error={false}            
           />
 
         <EmailField
@@ -98,7 +99,8 @@ export default function Form(props: any) {
         value={formik.values.date} 
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
-        touched={Boolean(formik.touched.date)}/>
+        touched={Boolean(formik.touched.date)}
+        helperText="Debes seguir el formato DD/MM/AAAA"/>
 
          <CurrencyField
           id="currency"
