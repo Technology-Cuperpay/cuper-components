@@ -40,6 +40,7 @@ export interface DashboardNavbarProps extends AppBarProps {
   callBack: () => void;
   handleHelp: () => void;
   isCallBack?: boolean;
+  returnHome: () => void;
 }
 
 interface AccountPopoverProps {
@@ -151,8 +152,8 @@ const AccountButton = (props:any) => {
       >
         {mobileDevice ? (
           !openPopover ? 
-          <MenuRoundedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
-          : <CloseOutlinedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"}/>
+          <MenuRoundedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"} sx={{ cursor:"pointer" }}/>
+          : <CloseOutlinedIcon htmlColor={register ? "#FFFFFF" : "#5757CF"} sx={{ cursor:"pointer" }}/>
         ) : (
           <Box display="flex" flexDirection="row">
             <Box  display="flex" alignItems="center" sx={{ mr: 1.5, width: 31, height: 31, }}>
@@ -177,7 +178,7 @@ const AccountButton = (props:any) => {
 };
 
 export default function NavBar(props:DashboardNavbarProps) {
-  const { logout, authorized, register, callBack, handleHelp, isCallBack} = props;
+  const { logout, authorized, register, callBack, handleHelp, isCallBack, returnHome} = props;
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -207,11 +208,11 @@ export default function NavBar(props:DashboardNavbarProps) {
           }}
         >
           {mobileDevice && isCallBack ? (
-            <Box sx={{ alignItems: "center", display: "flex" }} onClick={callBack}>
+            <Box sx={{ alignItems: "center", display: "flex", cursor:"pointer" }} onClick={callBack}>
               <ChevronLeftIcon fontSize="small" htmlColor={register ? "#FFFFFF" : "#5757CF"} />
             </Box>
           ) : null}
-          <Box sx={{ alignItems: "center", display: "flex", width:"100%", justifyContent:mobileDevice ? "center" : "left" }}>
+          <Box onClick={returnHome} sx={{ alignItems: "center", display: "flex", width:"100%", justifyContent:mobileDevice ? "center" : "left", cursor:"pointer" }}>
             <LogoIcon variant={register ? "primary" : "light"} />
           </Box>
           
