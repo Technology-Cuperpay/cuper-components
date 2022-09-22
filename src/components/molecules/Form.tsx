@@ -126,6 +126,7 @@ export default function Form(props: any) {
           color={undefined}        
           ></ButtonMain>
       </form>
+      hola este es un mensaje <TermsModal underline={true}/>
     </ThemeProvider>
   );
 }

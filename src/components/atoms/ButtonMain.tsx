@@ -5,14 +5,16 @@ import Button from "@mui/material/Button";
 import { Color } from "../../types/TypeColor";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
+import { Size } from "../../types/Size";
 
 export interface ButtonProps {
   label: string;
   variant?: "text" | "outlined" | "contained" | undefined;
   color?: Color;
+  size?: Size;
   loading: boolean;
   disabled: boolean;
-  onClick?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
   type: boolean;
   fullWidth: boolean;
   sx?: any;
@@ -21,7 +23,7 @@ export interface ButtonProps {
 export default function ButtonMain (props: ButtonProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const { label, variant, loading, disabled, color, type, fullWidth, sx, onClick} = props;
+  const { label, variant, loading, disabled, color, size, type, fullWidth, sx, onClick} = props;
 
   return (
     <ThemeProvider
@@ -35,7 +37,8 @@ export default function ButtonMain (props: ButtonProps) {
         disabled={loading || disabled}
         fullWidth={mobileDevice || fullWidth}
         color={color? color : 'primary'}
-        //onClick={onClick}
+        size={size? size : 'large'}
+        onClick={onClick}
         type={type? "submit": 'button'}
         sx={sx}
       >
