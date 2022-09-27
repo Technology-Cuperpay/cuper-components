@@ -10,67 +10,108 @@ export interface TextFieldProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: any;
   helperText?: string;
-  touched:boolean;
+  touched: boolean;
   sx?: any;
   disabled?: boolean;
 }
 const CellphoneField = (props: TextFieldProps) => {
-  const { id, value, handleChange, handleBlur, helperText, touched, sx, disabled } = props;
+  const {
+    id,
+    value,
+    handleChange,
+    handleBlur,
+    helperText,
+    touched,
+    sx,
+    disabled,
+  } = props;
   const CHARACTER_LIMIT = 10;
-  const [contador, setContador] = React.useState(value.length);
+  const [localValue, setLocalValue] = React.useState(value);
+  const [contador, setContador] = React.useState(
+    localValue.replace(/[^0-9]/g, "").length
+  );
   const [isValid, setIsValid] = React.useState(true);
   const [error, setError] = React.useState("");
 
   const schema = yup.object().shape({
-    phoneNumber: yup.string().required("Este campo es obligatorio").min(12, 'Tu número de teléfono debe estar conformado por 10 dígitos.'),
+    phoneNumber: yup
+      .string()
+      .required("Este campo es obligatorio")
+      .min(12, "Tu número de teléfono debe estar conformado por 10 dígitos."),
   });
-  
-  const validateSchema = async (value:string) => {
-    await schema.validate({ phoneNumber: value })
-    .then(() => {
-        setIsValid(true);
-    })
-    .catch((err) => {
-      setIsValid(false);
-      setError(err.errors[0])
-    });
+
+
+  const formatNumber = (value:string) => {
+    if (value.length === 10 && !value.includes("-")) {
+      value =
+        value.substring(0, 2) +
+        "-" +
+        value.substring(2, 6) +
+        "-" +
+        value.substring(6, 10);
+    }
+
+    if (value.length === 3 && !value.includes("-")) {
+      value =
+        value.substring(0, 2) +
+        "-" +
+        value.substring(2);
+    } else {
+      value = value;
+    }
+
+    if (
+      value.length === 8 &&
+      value.split("-").length - 1 === 1
+    ) {
+      value =
+        value.substring(0, 7) +
+        "-" +
+        value.substring(7);
+    } else {
+      value = value;
+    }
+    return value;
   }
 
-  React.useEffect( () => {
-    if(touched){
-      validateSchema(value)
+  const validateSchema = async (value: string) => {
+    value = formatNumber(value);
+    await schema
+      .validate({ phoneNumber: value })
+      .then(() => {
+          setIsValid(true);
+      })
+      .catch((err) => {
+        console.log('err',err)
+        setIsValid(false);
+        setError(err.errors[0]);
+      });
+  };
+
+  React.useEffect(() => {
+    if (touched) {
+      validateSchema(value);
     }
-    
-  },[touched])
+  }, [touched]);
+  
 
   const handleValidate = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    if(event.target.value.length === 10 && ! event.target.value.includes("-")){
-      event.target.value = event.target.value.substring(0, 2) + '-' + event.target.value.substring(2, 6) + '-' + event.target.value.substring(6, 10)
-    } 
-
-    if(event.target.value.length === 3 && ! event.target.value.includes("-")) {
-      event.target.value = event.target.value.substring(0, 2) + '-' + event.target.value.substring(2)
-    } else {
-      event.target.value = event.target.value;
-    }
-
-    if(event.target.value.length === 8 && event.target.value.split("-").length - 1 === 1) {
-      event.target.value = event.target.value.substring(0, 7) + "-" + event.target.value.substring(7);
-    } else {
-      event.target.value = event.target.value;
-    }
-
+   
+    event.target.value = formatNumber( event.target.value);
+   
     const regex = /^([0-9]*)\-?([0-9]*)\-?([0-9]*)$/;
     if (event.target.value === "" || regex.test(event.target.value)) {
-      setIsValid(true);  
-      setContador(event.target.value.replace(/[^0-9]/g, '').length);
+      setContador(event.target.value.replace(/[^0-9]/g, "").length);
+      setIsValid(true);
+      setLocalValue(event.target.value);
       handleChange(event);
     } else {
       setIsValid(false);
-      setError("Tu número de teléfono debe estar conformado por 10 dígitos.")
-    }  
-
+      setError("Tu número de teléfono debe estar conformado por 10 dígitos.");
+    }
     validateSchema(event.target.value)
+
+   
   };
 
   return (
@@ -83,7 +124,11 @@ const CellphoneField = (props: TextFieldProps) => {
       <TextField
         id={id}
         label="Número de teléfono celular"
-        value={value}
+        value={value.length === 10 && !value.includes('-') ? 
+        value.substring(0, 2) +
+        "-" + value.substring(2, 6) +
+        "-" + value.substring(6, 10) : 
+        value}
         type="tel"
         onChange={handleValidate}
         onBlur={handleBlur}
@@ -93,15 +138,17 @@ const CellphoneField = (props: TextFieldProps) => {
           maxLength: 12,
         }}
         InputProps={{
-          endAdornment: <InputAdornment position="end">{`${contador}/${CHARACTER_LIMIT}`}</InputAdornment>,
+          endAdornment: (
+            <InputAdornment position="end">{`${contador}/${CHARACTER_LIMIT}`}</InputAdornment>
+          ),
         }}
         margin="normal"
         sx={sx}
         disabled={disabled}
         fullWidth
         required
-        />
-      </ThemeProvider>
+      />
+    </ThemeProvider>
   );
 };
 export default CellphoneField;

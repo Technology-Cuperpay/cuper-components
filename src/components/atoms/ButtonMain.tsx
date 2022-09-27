@@ -11,7 +11,7 @@ export interface ButtonProps {
   label: string;
   variant?: "text" | "outlined" | "contained" | undefined;
   color?: Color;
-  size?: Size;
+  size?: any;
   loading: boolean;
   disabled: boolean;
   onClick?: () => void;

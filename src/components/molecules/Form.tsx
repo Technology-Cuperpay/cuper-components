@@ -18,10 +18,10 @@ import TermsModal from "./TermsModal";
 
 export default function Form(props: any) {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
-
+ 
   const formik = useFormik({
     initialValues: {
-      mobilePhone: "",
+      mobilePhone: "5523325141",
       email: "",
       curp: "",
       currency: "",
@@ -29,11 +29,11 @@ export default function Form(props: any) {
       submit: null,
     },
     validationSchema: Yup.object({
-     mobilePhone: Yup.string().required("Requerido"),
-      email: Yup.string().required("Requerido"),
+     mobilePhone: Yup.string().required("Requerido").min(10),
+      /* email: Yup.string().required("Requerido"),
       curp: Yup.string().required("Requerido"),
       currency: Yup.string().required("Requerido"),
-      date: Yup.string().required("Requerido").min(10),
+      date: Yup.string().required("Requerido").min(10), */
 
     }),
     onSubmit: async (values, helpers): Promise<void> => {
@@ -50,6 +50,11 @@ export default function Form(props: any) {
       }
     },
   });
+
+  const handle = () => {
+    console.log("values", formik.values);
+    setIsSubmitting(false);
+  }
   return (
     <ThemeProvider
       theme={createTheme({
@@ -76,7 +81,7 @@ export default function Form(props: any) {
         sx={{mt:5}}
         disabled={isSubmitting}/>
 
-        <CurpField 
+        {/* <CurpField 
           id="curp"
           value={formik.values.curp}
           handleChange={formik.handleChange}
@@ -84,9 +89,9 @@ export default function Form(props: any) {
           handleBlur={formik.handleBlur} 
           touched={Boolean(formik.touched.curp)}
           error={false}          
-          />
+          /> */}
 
-        <EmailField
+        {/* <EmailField
           id="email"
           value={formik.values.email}
           handleChange={formik.handleChange}
@@ -94,18 +99,18 @@ export default function Form(props: any) {
           touched={Boolean(formik.touched.email)}
           sx={{ mb: 5 }}
           disabled={isSubmitting}
-        />
+        /> */}
 
-        <DateField
+        {/* <DateField
         id="date"
         value={formik.values.date} 
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
         touched={Boolean(formik.touched.date)}
         helperText="Debes seguir el formato DD/MM/AAAA"
-        disabled={isSubmitting}/>
+        disabled={isSubmitting}/> */}
 
-         <CurrencyField
+        {/*  <CurrencyField
           id="currency"
           label="Ingresos"
           value={formik.values.currency}
@@ -113,7 +118,7 @@ export default function Form(props: any) {
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.currency)}
           helperText="CAMBIAR TEXTO"
-          disabled={isSubmitting}/> 
+          disabled={isSubmitting}/>  */}
 
         <ButtonMain
         fullWidth={true}
@@ -121,12 +126,12 @@ export default function Form(props: any) {
           variant="contained"
           label="Enviar"
           loading={isSubmitting}
-          //onClick={(e) => {}}
-          disabled={isSubmitting} 
+          onClick={handle}
+          disabled={formik.values.mobilePhone === "" || formik.isSubmitting || !formik.isValid || formik.values.mobilePhone.replace(/[^0-9]/g, "").length < 10} 
           color={undefined}        
           ></ButtonMain>
       </form>
-      hola este es un mensaje <TermsModal underline={true}/>
+     {/*  hola este es un mensaje <TermsModal underline={true}/> */}
     </ThemeProvider>
   );
 }
