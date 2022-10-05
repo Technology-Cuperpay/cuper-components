@@ -80,7 +80,7 @@ export default function CurrencyField(props: CustomProps) {
           type="tel"
           onChange={handleValidate}
           InputProps={{
-            startAdornment: <InputAdornment position="start">$</InputAdornment>,
+            startAdornment: "$",
           }}
           sx={sx}
           disabled={disabled}
