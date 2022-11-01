@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
@@ -25,6 +25,10 @@ const TextFieldText = (props: TextFieldProps) => {
   const [isValid, setIsValid] = React.useState(true);
   const [errorLocal, setError] = React.useState("");
 
+  useEffect(() => {
+    setContador(value.length)
+  },[value])
+  
   const schema = yup.object().shape({
     curp: yup.string().required("Este campo es obligatorio").min(18, 'Tu CURP debe estar conformado por 18 caracteres.'),
   });

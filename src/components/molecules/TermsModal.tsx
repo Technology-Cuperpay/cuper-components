@@ -20,11 +20,12 @@ export interface TermsModalProps {
   color?:string;
   underline?:boolean;
   variant?: boolean;
+  sx?: any;
 }
 
 export default function TermsModal(props:TermsModalProps) {
   const [open, setOpen] = React.useState(false);
-  const { color, underline, variant } = props;
+  const { color, underline, variant, sx } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -43,7 +44,7 @@ export default function TermsModal(props:TermsModalProps) {
         })}
       >
         
-            <Typography variant={variant ? "body1" : "caption"} color="text.secondary">
+            <Typography variant={variant ? "body1" : "caption"} color="text.secondary" sx={sx}>
               <Link onClick={handleClickOpen} sx={{ color: color? color : "text.secondary", textDecorationLine: underline ? 'underline':'none' }}>
               Términos y condiciones
               </Link>

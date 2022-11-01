@@ -15,10 +15,14 @@ import ProgressBar from "./progressBar";
 import { Navbar } from "../organisms";
 import PrivacityModal from "./PrivacityModal";
 import TermsModal from "./TermsModal";
+import { Typography } from "@mui/material";
 
 export default function Form(props: any) {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
- 
+  const [curp, setCurp] = React.useState(false);
+  const [valueCURP, setvalueCURP] = React.useState("");
+
+
   const formik = useFormik({
     initialValues: {
       mobilePhone: "5523325141",
@@ -53,7 +57,7 @@ export default function Form(props: any) {
 
   const handle = () => {
     console.log("values", formik.values);
-    setIsSubmitting(false);
+    //setIsSubmitting(false);
   }
   return (
     <ThemeProvider
@@ -81,15 +85,17 @@ export default function Form(props: any) {
         sx={{mt:5}}
         disabled={isSubmitting}/>
 
-        {/* <CurpField 
+        <CurpField 
           id="curp"
-          value={formik.values.curp}
-          handleChange={formik.handleChange}
-          disabled={isSubmitting} 
+          value={valueCURP}
+          handleChange={() => setvalueCURP(valueCURP)}
+          disabled={false} 
           handleBlur={formik.handleBlur} 
           touched={Boolean(formik.touched.curp)}
           error={false}          
-          /> */}
+          />
+
+          <button onClick={() => setvalueCURP("FOLA970106MDFLPN02")}>boton</button>
 
         {/* <EmailField
           id="email"
@@ -101,14 +107,14 @@ export default function Form(props: any) {
           disabled={isSubmitting}
         /> */}
 
-        {/* <DateField
+         <DateField
         id="date"
         value={formik.values.date} 
         handleChange={formik.handleChange} 
         handleBlur={formik.handleBlur}
         touched={Boolean(formik.touched.date)}
         helperText="Debes seguir el formato DD/MM/AAAA"
-        disabled={isSubmitting}/> */}
+        disabled={isSubmitting}/> 
 
         {/*  <CurrencyField
           id="currency"
@@ -120,7 +126,7 @@ export default function Form(props: any) {
           helperText="CAMBIAR TEXTO"
           disabled={isSubmitting}/>  */}
 
-        <ButtonMain
+        {/* <ButtonMain
         fullWidth={true}
           type={true}
           variant="contained"
@@ -129,9 +135,9 @@ export default function Form(props: any) {
           onClick={handle}
           disabled={formik.values.mobilePhone === "" || formik.isSubmitting || !formik.isValid || formik.values.mobilePhone.replace(/[^0-9]/g, "").length < 10} 
           color={undefined}        
-          ></ButtonMain>
+          ></ButtonMain> */}
       </form>
-     {/*  hola este es un mensaje <TermsModal underline={true}/> */}
+      hola este es un mensaje <TermsModal underline={true} sx={{fontWeight:"bold"}}/> 
     </ThemeProvider>
   );
 }

@@ -82,7 +82,6 @@ const CellphoneField = (props: TextFieldProps) => {
           setIsValid(true);
       })
       .catch((err) => {
-        console.log('err',err)
         setIsValid(false);
         setError(err.errors[0]);
       });

@@ -28,6 +28,18 @@ const TextFieldText = (props: TextFieldProps) => {
     await schema.validate({ date: value })
     .then(() => {
         setIsValid(true);
+        if(value.length === 10){
+          if (
+            !isValidDate(
+              parseInt(value.substring(0, 2)),
+              parseInt(value.substring(3, 5)),
+              parseInt(value.substring(5, 9))
+            ) 
+          ) {
+            setIsValid(false);
+            setError("Fecha de nacimiento invalida")
+          } 
+        }
     })
     .catch((err) => {
       setIsValid(false);
@@ -73,20 +85,6 @@ const TextFieldText = (props: TextFieldProps) => {
       setIsValid(false);
       setError("Debes seguir el formato DD/MM/AAAA")
     } 
-
-    if(event.target.value.length === 10){
-      if (
-        isValidDate(
-          parseInt(event.target.value.substring(0, 2)),
-          parseInt(event.target.value.substring(3, 5)),
-          parseInt(event.target.value.substring(5, 9))
-        ) == false
-      ) {
-        setIsValid(false);
-        setError("Fecha de nacimiento invalida")
-        return;
-      } 
-    }
     validateSchema(event.target.value)
     
   };
