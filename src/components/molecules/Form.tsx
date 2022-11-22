@@ -137,7 +137,13 @@ export default function Form(props: any) {
           color={undefined}        
           ></ButtonMain> */}
       </form>
-      hola este es un mensaje <TermsModal underline={true} sx={{fontWeight:"bold"}}/> 
+      <Typography variant="body2">
+      hola este es un mensaje 
+      <TermsModal 
+      variant="body2"
+      underline={true} 
+      sx={{cursor:"pointer",fontWeight: "600", display: "inline"  }}/> 
+      </Typography>
     </ThemeProvider>
   );
 }

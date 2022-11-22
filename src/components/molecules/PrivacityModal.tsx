@@ -13,16 +13,19 @@ import {
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 import DocPrivacity from "../atoms/DocPrivacity";
+import { Variant } from "../../types/Variant";
 
 
 export interface PrivacityModalProps {
   color?:string;
   underline?:boolean;
+  variant?: Variant;
+  sx?: any;
 }
 
 export default function PrivacityModal(props:PrivacityModalProps) {
   const [open, setOpen] = React.useState(false);
-  const { color, underline } = props;
+  const { color, underline,variant, sx } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -41,7 +44,7 @@ export default function PrivacityModal(props:PrivacityModalProps) {
         })}
       >
         
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant={variant ? variant : "caption"} color="text.secondary" sx={sx}>
               <Link onClick={handleClickOpen} sx={{ color: color? color : "text.secondary", textDecorationLine: underline ? 'underline':'none' }}>
                 Aviso de Privacidad
               </Link>

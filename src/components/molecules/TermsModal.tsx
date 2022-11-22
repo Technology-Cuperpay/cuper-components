@@ -15,11 +15,12 @@ import {
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
 import DocTerms from "../atoms/DocTerms";
+import { Variant } from "../../types/Variant";
 
 export interface TermsModalProps {
   color?:string;
   underline?:boolean;
-  variant?: boolean;
+  variant?: Variant;
   sx?: any;
 }
 
@@ -44,7 +45,7 @@ export default function TermsModal(props:TermsModalProps) {
         })}
       >
         
-            <Typography variant={variant ? "body1" : "caption"} color="text.secondary" sx={sx}>
+            <Typography variant={variant ? variant : "caption"} color="text.secondary" sx={sx}>
               <Link onClick={handleClickOpen} sx={{ color: color? color : "text.secondary", textDecorationLine: underline ? 'underline':'none' }}>
               Términos y condiciones
               </Link>

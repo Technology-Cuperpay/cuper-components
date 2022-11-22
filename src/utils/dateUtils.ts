@@ -22,9 +22,13 @@ function isLeap(year: number) {
 export function isValidDate(d: number, m: number, y: number) {
     // If year, month and day
     // are not in given range
+    console.log(' MAX_VALID_YR', y)
     if (y > MAX_VALID_YR ||
-        y < MIN_VALID_YR)
-        return false;
+        y < MIN_VALID_YR){
+            console.log(' MAX_VALID_YR', MAX_VALID_YR)
+            return false;
+        }
+        
 
     if (m < 1 || m > 12)
         return false;

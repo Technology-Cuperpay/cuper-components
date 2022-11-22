@@ -33,7 +33,7 @@ const TextFieldText = (props: TextFieldProps) => {
             !isValidDate(
               parseInt(value.substring(0, 2)),
               parseInt(value.substring(3, 5)),
-              parseInt(value.substring(5, 9))
+              parseInt(value.substring(6, 10))
             ) 
           ) {
             setIsValid(false);
