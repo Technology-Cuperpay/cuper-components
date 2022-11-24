@@ -91,7 +91,7 @@ export const AccountPopover: FC<AccountPopoverProps> = (props) => {
           </ListItemIcon>
           <ListItemText
             primary={
-              <TermsModal color="primary" variant/>
+              <TermsModal color="primary" variant="body1"/>
              
             }
           />

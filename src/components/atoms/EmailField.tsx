@@ -21,7 +21,7 @@ const EmailField = (props: TextFieldProps) => {
   const [error, setError] = React.useState("");
 
   const schema = yup.object().shape({
-    email: yup.string().email("Por favor verifica tu correo electrónico").required("Este campo es obligatorio"),
+    email: yup.string().email("Tu correo electrónico no es correcto. Ej: xxxxx@gmail.com").required("Este campo es obligatorio"),
   });
 
   const validateSchema = async (value:string) => {

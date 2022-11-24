@@ -116,7 +116,7 @@ export default function Form(props: any) {
         helperText="Debes seguir el formato DD/MM/AAAA"
         disabled={isSubmitting}/> 
 
-        {/*  <CurrencyField
+         <CurrencyField
           id="currency"
           label="Ingresos"
           value={formik.values.currency}
@@ -124,7 +124,7 @@ export default function Form(props: any) {
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.currency)}
           helperText="CAMBIAR TEXTO"
-          disabled={isSubmitting}/>  */}
+          disabled={isSubmitting}/> 
 
         {/* <ButtonMain
         fullWidth={true}

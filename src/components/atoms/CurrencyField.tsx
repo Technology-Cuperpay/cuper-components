@@ -4,7 +4,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
-import { InputAdornment } from "@mui/material";
 import * as yup from "yup";
 
 interface CustomProps {
@@ -48,9 +47,8 @@ export default function CurrencyField(props: CustomProps) {
   },[touched])
 
   const handleValidate = async (event: any) => {
-      let value = event.target.value;
       handleChange(event);
-      validateSchema(value)
+      validateSchema(event.target.value)
   };
 
   return (
@@ -84,6 +82,16 @@ export default function CurrencyField(props: CustomProps) {
           }}
           sx={sx}
           disabled={disabled}
+          isAllowed={(values) => {
+            const {floatValue,formattedValue} = values
+            if(floatValue){
+            return floatValue >= 1 && floatValue <= 250000 ;
+            } else if(formattedValue === ""){
+              return formattedValue === ""
+            } else {
+            return false
+            }
+          }}
         />
        
       </Box>

@@ -37,7 +37,7 @@ const CellphoneField = (props: TextFieldProps) => {
     phoneNumber: yup
       .string()
       .required("Este campo es obligatorio")
-      .min(12, "Tu número de teléfono debe estar conformado por 10 dígitos."),
+      .min(12, "Número de teléfono inválido"),
   });
 
 
@@ -106,7 +106,7 @@ const CellphoneField = (props: TextFieldProps) => {
       handleChange(event);
     } else {
       setIsValid(false);
-      setError("Tu número de teléfono debe estar conformado por 10 dígitos.");
+      setError("Número de teléfono inválido");
     }
     validateSchema(event.target.value)
 
