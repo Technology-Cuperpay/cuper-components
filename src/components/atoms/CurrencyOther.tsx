@@ -11,22 +11,29 @@ interface CustomProps {
   label: string;
   value: string;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleBlur: any;
+  handleBlur?: any;
   helperText?: string;
   touched:boolean;
   sx?: any;
   disabled?: boolean;
+  min: any;
+  max: any;
+  err?: boolean;
 }
 
 
-export default function CurrencyField(props: CustomProps) {
-  const { label, id, handleChange, helperText, handleBlur, sx, value, touched, disabled } = props;
+export default function CurrencyOther(props: CustomProps) {
+  const { label, id, handleChange, helperText, handleBlur, sx, value, touched, disabled, min, max, err} = props;
   const [isValid, setIsValid] = React.useState(true);
   const [error, setError] = React.useState("");
+  const [maxValue, setMaxValue] = React.useState(max);
+  const [minValue, setMinValue] = React.useState(min);
+
 
   const schema = yup.object().shape({
     currency: yup.string().required("Este campo es obligatorio"),
   });
+  
   const validateSchema = async (value:string) => {
     await schema.validate({ currency: value })
     .then(() => {
@@ -62,9 +69,9 @@ export default function CurrencyField(props: CustomProps) {
           id={id}
           label={label}
           customInput={TextField}
-          error={touched && !isValid}
+          error={(touched && !isValid) || err}
           fullWidth
-          helperText={touched && !isValid ? error : helperText}
+          helperText={isValid || err ? helperText : error }
           margin="none"
           required
           onBlur={handleBlur}
@@ -84,7 +91,7 @@ export default function CurrencyField(props: CustomProps) {
           isAllowed={(values) => {
             const {floatValue,formattedValue} = values
             if(floatValue){
-            return floatValue >= 1 && floatValue <= 250000 ;
+            return floatValue >= minValue && floatValue <= maxValue ;
             } else if(formattedValue === ""){
               return formattedValue === ""
             } else {

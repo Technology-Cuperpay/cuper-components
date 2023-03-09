@@ -9,10 +9,11 @@ import { formatter } from "../../utils/currencyUtil";
 export interface CurrencyProps {
   variant: Variant;
   amount: number;
+  sx?: any;
 }
 
 const Currency = (props: CurrencyProps) => {
-  const { variant, amount } = props;
+  const { variant, amount,sx } = props;
   const [value, setValue] = useState("");
   const [decimal, setDecimal] = useState("");
   
@@ -35,14 +36,14 @@ const Currency = (props: CurrencyProps) => {
         mode: "light",
       })}
     >
-      <Typography variant={variant} display={"inherit"}>
+      <Typography variant={variant} display={"inherit"} sx={sx}>
         {value}
         <Typography
           variant={variant}
           sx={{
             display: "inline",
             position: "relative",
-            top: "-0.5em",
+            top: "-0.9em",
             fontSize: "50% !important",
             pt: 1.5,
           }}

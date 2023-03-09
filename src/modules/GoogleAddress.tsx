@@ -92,7 +92,6 @@ export default function GoogleAddress(props: any) {
       (placeService.current as any).getDetails(
         { placeId: value.place_id, fields: ["address_components"] },
         (results?: any) => {
-          console.log(results.address_components);
           let data = {} as Customer;
           results.address_components.forEach((elem: AddressComponent) => {
             if (elem.types[0] == "route") data.addressLine1 = elem.long_name;

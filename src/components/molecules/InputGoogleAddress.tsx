@@ -14,7 +14,6 @@ export interface AutoCompleteAction {
 
 function autoCompleteReducer(state: Customer, action: AutoCompleteAction) {
   const { type, payload } = action;
-  console.log('action.type',action.type)
   switch (action.type) {
     case "loaded": {
       return {
@@ -66,9 +65,6 @@ export default function InputGoogleAddress (props: any) {
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
-        console.log('values',values)
-
-        console.log("values ----->", values);
       } catch (err) {
         console.error(err);
         helpers.setStatus({ success: false });
@@ -78,7 +74,6 @@ export default function InputGoogleAddress (props: any) {
   });
 
   useEffect(() => {
-    console.log('autoCompleteState',autoCompleteState)
   },[autoCompleteState])
 
   return (

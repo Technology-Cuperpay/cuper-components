@@ -7,7 +7,9 @@ import {
   ButtonMain,
   CellphoneField,
   CurpField,
+  Currency,
   CurrencyField,
+  CurrencyOther,
   DateField,
   EmailField,
 } from "../atoms";
@@ -31,6 +33,7 @@ export default function Form(props: any) {
       currency: "",
       date: "",
       submit: null,
+      payment: ""
     },
     validationSchema: Yup.object({
      mobilePhone: Yup.string().required("Requerido").min(10),
@@ -42,7 +45,6 @@ export default function Form(props: any) {
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
-        console.log("values", values);
         setIsSubmitting(true);
         helpers.setStatus({ success: true });
         helpers.setSubmitting(false);
@@ -56,7 +58,6 @@ export default function Form(props: any) {
   });
 
   const handle = () => {
-    console.log("values", formik.values);
     //setIsSubmitting(false);
   }
   return (
@@ -136,6 +137,19 @@ export default function Form(props: any) {
           disabled={formik.values.mobilePhone === "" || formik.isSubmitting || !formik.isValid || formik.values.mobilePhone.replace(/[^0-9]/g, "").length < 10} 
           color={undefined}        
           ></ButtonMain> */}
+{/*           <Currency sx={{color:"primary.main", mt:10}} amount={300.99} variant={"body1"}/>
+ */}          <CurrencyOther
+                          id="payment"
+                          label="Otra cantidad"
+                          value={formik.values.payment}
+                          min={2000}
+                          max={8000}
+                          handleChange={(e:any) => {
+                            console.log('h') }}
+                          touched={Boolean(formik.touched)}
+                          helperText="Ingresa una cantidad mayor al total del período actual"
+                          disabled={false}
+                        /> 
       </form>
       <Typography variant="body2">
       hola este es un mensaje 
