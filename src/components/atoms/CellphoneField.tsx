@@ -42,6 +42,19 @@ const CellphoneField = (props: TextFieldProps) => {
 
 
   const formatNumber = (value:string) => {
+    const pattern = /-/g;
+    const result = value.match(pattern);
+
+    if (value.length === 11 && result?.length === 1) {
+      value = value.replace("-", "");
+      value =
+        value.substring(0, 2) +
+        "-" +
+        value.substring(2, 6) +
+        "-" +
+        value.substring(6, 10);
+    }
+
     if (value.length === 10 && !value.includes("-")) {
       value =
         value.substring(0, 2) +
