@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Variant } from "../../types/Variant";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
@@ -13,10 +13,9 @@ export interface CurrencyProps {
 }
 
 const Currency = (props: CurrencyProps) => {
-  const { variant, amount,sx } = props;
+  const { variant, amount, sx } = props;
   const [value, setValue] = useState("");
   const [decimal, setDecimal] = useState("");
-  
 
   useEffect(() => {
     if (amount || amount == 0) {
@@ -38,8 +37,7 @@ const Currency = (props: CurrencyProps) => {
     >
       <Typography variant={variant} display={"inherit"} sx={sx}>
         {value}
-        <Typography
-          variant={variant}
+        <Box
           sx={{
             display: "inline",
             position: "relative",
@@ -49,7 +47,7 @@ const Currency = (props: CurrencyProps) => {
           }}
         >
           {decimal}
-        </Typography>
+        </Box>
       </Typography>
     </ThemeProvider>
   );
