@@ -24,7 +24,6 @@ export default function Form(props: any) {
   const [curp, setCurp] = React.useState(false);
   const [valueCURP, setvalueCURP] = React.useState("");
 
-
   const formik = useFormik({
     initialValues: {
       mobilePhone: "5523325141",
@@ -33,15 +32,14 @@ export default function Form(props: any) {
       currency: "",
       date: "",
       submit: null,
-      payment: ""
+      payment: "",
     },
     validationSchema: Yup.object({
-     mobilePhone: Yup.string().required("Requerido").min(10),
+      mobilePhone: Yup.string().required("Requerido").min(10),
       /* email: Yup.string().required("Requerido"),
       curp: Yup.string().required("Requerido"),
       currency: Yup.string().required("Requerido"),
       date: Yup.string().required("Requerido").min(10), */
-
     }),
     onSubmit: async (values, helpers): Promise<void> => {
       try {
@@ -59,7 +57,7 @@ export default function Form(props: any) {
 
   const handle = () => {
     //setIsSubmitting(false);
-  }
+  };
   return (
     <ThemeProvider
       theme={createTheme({
@@ -74,30 +72,30 @@ export default function Form(props: any) {
       } } handleHelp={function (): void {
         throw new Error("Function not implemented.");
       } }/> */}
-      <ProgressBar activeStep={1}/>
+      <ProgressBar activeStep={1} />
       <form onSubmit={formik.handleSubmit}>
         <CellphoneField
-        id="mobilePhone"
-        helperText={"Texto de ayuda"} 
-        value={formik.values.mobilePhone} 
-        handleChange={formik.handleChange} 
-        handleBlur={formik.handleBlur}
-        touched={Boolean(formik.touched.mobilePhone)}
-        sx={{mt:5}}
-        disabled={isSubmitting}/>
-
-        <CurpField 
+          id="mobilePhone"
+          helperText={"Texto de ayuda"}
+          value={formik.values.mobilePhone}
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          touched={Boolean(formik.touched.mobilePhone)}
+          sx={{ mt: 5 }}
+          disabled={isSubmitting}
+        />
+        <CurpField
           id="curp"
           value={valueCURP}
           handleChange={() => setvalueCURP(valueCURP)}
-          disabled={false} 
-          handleBlur={formik.handleBlur} 
+          disabled={false}
+          handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.curp)}
-          error={false}          
-          />
-
-          <button onClick={() => setvalueCURP("FOLA970106MDFLPN02")}>boton</button>
-
+          error={false}
+        />
+        <button onClick={() => setvalueCURP("FOLA970106MDFLPN02")}>
+          boton
+        </button>
         {/* <EmailField
           id="email"
           value={formik.values.email}
@@ -107,26 +105,37 @@ export default function Form(props: any) {
           sx={{ mb: 5 }}
           disabled={isSubmitting}
         /> */}
-
-         <DateField
-        id="date"
-        value={formik.values.date} 
-        handleChange={formik.handleChange} 
-        handleBlur={formik.handleBlur}
-        touched={Boolean(formik.touched.date)}
-        helperText="Debes seguir el formato DD/MM/AAAA"
-        disabled={isSubmitting}/> 
-
-         <CurrencyField
+        <DateField
+          id="date"
+          value={formik.values.date}
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          touched={Boolean(formik.touched.date)}
+          helperText="Debes seguir el formato DD/MM/AAAA"
+          disabled={isSubmitting}
+        />
+        {/* <CurrencyField
           id="currency"
-          label="Ingresos"
+          label="Monto total a pagar"
           value={formik.values.currency}
           handleChange={formik.handleChange}
           handleBlur={formik.handleBlur}
           touched={Boolean(formik.touched.currency)}
           helperText="CAMBIAR TEXTO"
-          disabled={isSubmitting}/> 
-
+          disabled={isSubmitting}
+        /> */}
+        <CurrencyField
+          id="amount"
+          label="Monto Total a Pagar"
+          value={formik.values.currency}
+          handleChange={formik.handleChange}
+          handleBlur={formik.handleBlur}
+          touched={Boolean(formik.touched.currency)}
+          helperText=""
+          textColor={"#5757CF"}
+          textSize="32px"
+          placeholder="0"
+        />
         {/* <ButtonMain
         fullWidth={true}
           type={true}
@@ -137,26 +146,29 @@ export default function Form(props: any) {
           disabled={formik.values.mobilePhone === "" || formik.isSubmitting || !formik.isValid || formik.values.mobilePhone.replace(/[^0-9]/g, "").length < 10} 
           color={undefined}        
           ></ButtonMain> */}
-{/*           <Currency sx={{color:"primary.main", mt:10}} amount={300.99} variant={"body1"}/>
- */}          <CurrencyOther
-                          id="payment"
-                          label="Otra cantidad"
-                          value={formik.values.payment}
-                          min={2000}
-                          max={8000}
-                          handleChange={(e:any) => {
-                            console.log('h') }}
-                          touched={Boolean(formik.touched)}
-                          helperText="Ingresa una cantidad mayor al total del período actual"
-                          disabled={false}
-                        /> 
+        {/*           <Currency sx={{color:"primary.main", mt:10}} amount={300.99} variant={"body1"}/>
+         */}{" "}
+        <CurrencyOther
+          id="payment"
+          label="Otra cantidad"
+          value={formik.values.payment}
+          min={2000}
+          max={8000}
+          handleChange={(e: any) => {
+            console.log("h");
+          }}
+          touched={Boolean(formik.touched)}
+          helperText="Ingresa una cantidad mayor al total del período actual"
+          disabled={false}
+        />
       </form>
       <Typography variant="body2">
-      hola este es un mensaje 
-      <TermsModal 
-      variant="body2"
-      underline={true} 
-      sx={{cursor:"pointer",fontWeight: "600", display: "inline"  }}/> 
+        hola este es un mensaje
+        <TermsModal
+          variant="body2"
+          underline={true}
+          sx={{ cursor: "pointer", fontWeight: "600", display: "inline" }}
+        />
       </Typography>
     </ThemeProvider>
   );

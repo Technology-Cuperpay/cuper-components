@@ -13,41 +13,62 @@ interface CustomProps {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleBlur: any;
   helperText?: string;
-  touched:boolean;
+  touched: boolean;
   sx?: any;
   disabled?: boolean;
+  variant?: "outlined" | "standard" | "filled" | undefined;
+  textSize?: string;
+  textColor?: string;
+  placeholder?: string;
+  textCenter?: boolean;
+  error?: boolean;
 }
 
-
 export default function CurrencyField(props: CustomProps) {
-  const { label, id, handleChange, helperText, handleBlur, sx, value, touched, disabled } = props;
+  const {
+    label,
+    id,
+    handleChange,
+    helperText,
+    handleBlur,
+    sx,
+    value,
+    touched,
+    disabled,
+    variant,
+    textSize,
+    textColor,
+    placeholder,
+    textCenter,
+    error,
+  } = props;
   const [isValid, setIsValid] = React.useState(true);
-  const [error, setError] = React.useState("");
+  const [errorLocal, setError] = React.useState("");
 
   const schema = yup.object().shape({
     currency: yup.string().required("Este campo es obligatorio"),
   });
-  const validateSchema = async (value:string) => {
-    await schema.validate({ currency: value })
-    .then(() => {
+  const validateSchema = async (value: string) => {
+    await schema
+      .validate({ currency: value })
+      .then(() => {
         setIsValid(true);
-    })
-    .catch((err) => {
-      setIsValid(false);
-      setError(err.errors[0])
-    });
-  }
+      })
+      .catch((err) => {
+        setIsValid(false);
+        setError(err.errors[0]);
+      });
+  };
 
-  React.useEffect( () => {
-    if(touched){
-      validateSchema(value)
+  React.useEffect(() => {
+    if (touched) {
+      validateSchema(value);
     }
-    
-  },[touched])
+  }, [touched]);
 
   const handleValidate = async (event: any) => {
-      handleChange(event);
-      validateSchema(event.target.value)
+    handleChange(event);
+    validateSchema(event.target.value);
   };
 
   return (
@@ -62,11 +83,12 @@ export default function CurrencyField(props: CustomProps) {
           id={id}
           label={label}
           customInput={TextField}
-          error={touched && !isValid}
+          error={(touched && !isValid) || error}
           fullWidth
-          helperText={touched && !isValid ? error : helperText}
+          helperText={touched && !isValid ? errorLocal : helperText}
           margin="none"
           required
+          variant={variant ? variant : "outlined"}
           onBlur={handleBlur}
           value={value}
           isNumericString={true}
@@ -76,23 +98,50 @@ export default function CurrencyField(props: CustomProps) {
           decimalScale={2}
           type="tel"
           onChange={handleValidate}
+          InputLabelProps={{
+            style: {
+              fontSize: textSize ? textSize : "auto",
+            },
+          }}
           InputProps={{
-            startAdornment: "$",
+            style: {
+              color: textColor ? textColor : "auto",
+              fontSize: textSize ? textSize : "auto",
+              textAlign: textCenter ? "left" : "inherit",
+            },
+
+            startAdornment: (
+              <span
+                style={{
+                  color: textColor ? textColor : "auto",
+                  fontSize: textSize ? textSize : "auto",
+                  textAlign: textCenter ? "right" : "inherit",
+                }}
+              >
+                $
+              </span>
+            ),
+          }}
+          inputProps={{
+            style: {
+              fontSize: textSize ? textSize : "auto",
+              textAlign: textCenter ? "left" : "inherit",
+            },
           }}
           sx={sx}
           disabled={disabled}
+          placeholder={placeholder}
           isAllowed={(values) => {
-            const {floatValue,formattedValue} = values
-            if(floatValue){
-            return floatValue >= 1 && floatValue <= 250000 ;
-            } else if(formattedValue === ""){
-              return formattedValue === ""
+            const { floatValue, formattedValue } = values;
+            if (floatValue) {
+              return floatValue >= 1 && floatValue <= 250000;
+            } else if (formattedValue === "") {
+              return formattedValue === "";
             } else {
-            return false
+              return false;
             }
           }}
         />
-       
       </Box>
     </ThemeProvider>
   );
