@@ -1,8 +1,9 @@
 import React from "react";
 import { createTheme } from "../../theme";
 import { ThemeProvider } from "@mui/material/styles";
-import { InputAdornment, TextField } from "@mui/material";
+import { InputAdornment, TextField, Typography, textFieldClasses } from "@mui/material";
 import * as yup from "yup";
+import { Margin, Padding } from "@mui/icons-material";
 
 export interface TextFieldProps {
   id: string;
@@ -151,14 +152,32 @@ const CellphoneField = (props: TextFieldProps) => {
         }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">{`${contador}/${CHARACTER_LIMIT}`}</InputAdornment>
+            <InputAdornment position="end">
+              <Typography sx={{ fontSize: "1rem", "@media (max-width: 350px)": {fontSize: "0.7rem"}}}>
+              {`${contador}/${CHARACTER_LIMIT}`}
+              </Typography>
+              </InputAdornment>
           ),
+          
         }}
         margin="normal"
         sx={sx}
         disabled={disabled}
         fullWidth
         required
+        InputLabelProps={{
+          sx: {
+            fontSize: "1rem", // Tamaño de fuente para pantallas grandes
+            "@media (max-width: 350px)": {
+              fontSize: "0.66rem", // Tamaño de fuente para pantallas pequeñas
+              
+              paddingTop: "5px",
+              
+            },
+            display: "flex",
+            alignItems: "center"
+          }
+        }}
       />
     </ThemeProvider>
   );

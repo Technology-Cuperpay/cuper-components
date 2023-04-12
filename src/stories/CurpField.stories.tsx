@@ -11,5 +11,6 @@ const Template: ComponentStory<typeof CurpField> = (args) => <CurpField {...args
 
 export const Primary = Template.bind({});
 Primary.args = {
-  
+  value: '',
+  helperText: '',
 };

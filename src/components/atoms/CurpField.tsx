@@ -21,12 +21,14 @@ export interface TextFieldProps {
 const TextFieldText = (props: TextFieldProps) => {
   const { id, value, handleChange, handleBlur, helperText, touched, sx, loading, disabled, error } = props;
   const CHARACTER_LIMIT = 18;
-  const [contador, setContador] = React.useState(value.length);
+  const [contador, setContador] = React.useState(value ? value.length: 0);
   const [isValid, setIsValid] = React.useState(true);
   const [errorLocal, setError] = React.useState("");
 
   useEffect(() => {
-    setContador(value.length)
+    if(value){
+      setContador(value.length)
+    }
   },[value])
   
   const schema = yup.object().shape({
