@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, ListItem, Link } from "@mui/material";
 
-
 function TermsConditions(props: any) {
   return (
     <Box>
@@ -121,13 +120,13 @@ function TermsConditions(props: any) {
           Cuper.
         </ListItem>
         <ListItem color="text.secondary" sx={{ textAlign: "justify" }}>
-        <Typography>
-          m) Plataforma: al sitio web&nbsp;
-          <Link href="www.cuperpay.com" target="_blank">
-            www.cuperpay.com
-          </Link>
-          , aplicaciones móviles o plataformas relacionadas mediante las cuales
-          el Usuario puede acceder a los Servicios.
+          <Typography>
+            m) Plataforma: al sitio web&nbsp;
+            <Link href="www.cuperpay.com" target="_blank">
+              www.cuperpay.com
+            </Link>
+            , aplicaciones móviles o plataformas relacionadas mediante las
+            cuales el Usuario puede acceder a los Servicios.
           </Typography>
         </ListItem>
         <ListItem color="text.secondary" sx={{ textAlign: "justify" }}>
@@ -231,7 +230,7 @@ function TermsConditions(props: any) {
           marginY={2}
           {...props}
         >
-          IV.- PLATAFORMA Y SERVIVIOS.
+          IV.- PLATAFORMA Y SERVICIOS.
         </Typography>
         <Typography
           variant="body1"

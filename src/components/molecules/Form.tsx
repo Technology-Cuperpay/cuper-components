@@ -14,7 +14,7 @@ import {
   EmailField,
 } from "../atoms";
 import ProgressBar from "./progressBar";
-import { Navbar } from "../organisms";
+import { Navbar, SplashScreen } from "../organisms";
 import PrivacityModal from "./PrivacityModal";
 import TermsModal from "./TermsModal";
 import { Typography } from "@mui/material";
@@ -65,6 +65,12 @@ export default function Form(props: any) {
         mode: "light",
       })}
     >
+      <SplashScreen
+        title={""}
+        subtitle={""}
+        time={0}
+        sx={{ backgroundColor: "#5757CF" }}
+      />
       {/* <Navbar authorized={true} register={false} callBack={function (): void {
         throw new Error("Function not implemented.");
       } } logout={function (): void {

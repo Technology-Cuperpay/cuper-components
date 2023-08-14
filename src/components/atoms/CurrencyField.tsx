@@ -22,6 +22,7 @@ interface CustomProps {
   placeholder?: string;
   textCenter?: boolean;
   error?: boolean;
+  typeKeyboard?: "text" | "tel" | "password" | undefined;
 }
 
 export default function CurrencyField(props: CustomProps) {
@@ -41,6 +42,7 @@ export default function CurrencyField(props: CustomProps) {
     placeholder,
     textCenter,
     error,
+    typeKeyboard,
   } = props;
   const [isValid, setIsValid] = React.useState(true);
   const [errorLocal, setError] = React.useState("");
@@ -96,7 +98,7 @@ export default function CurrencyField(props: CustomProps) {
           decimalSeparator="."
           allowNegative={false}
           decimalScale={2}
-          type="tel"
+          type={typeKeyboard ? typeKeyboard : "tel"}
           onChange={handleValidate}
           InputLabelProps={{
             style: {

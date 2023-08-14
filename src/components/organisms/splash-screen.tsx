@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Container,
@@ -17,12 +17,32 @@ export interface SplashScreenProps {
   title: string;
   subtitle: string;
   time: number;
+  sx?: any;
 }
 
 export default function SplashScreen(props: SplashScreenProps) {
   const theme = useTheme();
   const mobileDevice = useMediaQuery(theme.breakpoints.down("sm"));
-  const { title, subtitle, time } = props;
+  const { title, subtitle, time, sx } = props;
+
+  const handleResize = () => {
+    const windowHeight = window.innerHeight;
+    const paperElement = document.getElementById("your-paper-element-id");
+
+    if (paperElement) {
+      paperElement.style.height = `${windowHeight}px`;
+    }
+  };
+
+  // Agregar el event listener para manejar los cambios de tamaño de la ventana
+  useEffect(() => {
+    handleResize(); // Llamada inicial para establecer la altura correcta
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <ThemeProvider
       theme={createTheme({
@@ -34,6 +54,10 @@ export default function SplashScreen(props: SplashScreenProps) {
         variant="outlined"
         sx={{
           border: "0px",
+          minHeight: "100%",
+          left: 0,
+          zIndex: 9000,
+          ...sx,
         }}
       >
         <Box
@@ -51,7 +75,8 @@ export default function SplashScreen(props: SplashScreenProps) {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
-                zIndex: 2000,
+
+                ...sx,
               }}
             >
               <>
