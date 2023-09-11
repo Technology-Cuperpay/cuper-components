@@ -7,6 +7,7 @@ import {
   ButtonMain,
   CellphoneField,
   CurpField,
+  CurrencyFieldIcon,
   Currency,
   CurrencyField,
   CurrencyOther,
@@ -176,6 +177,17 @@ export default function Form(props: any) {
           sx={{ cursor: "pointer", fontWeight: "600", display: "inline" }}
         />
       </Typography>
+      <CurrencyFieldIcon
+        id="income"
+        label="Costo aprox. del procedimiento"
+        handleChange={(e: any) => {}}
+        handleCancelClick={() => {}}
+        value={"0"}
+        sx={{ marginTop: 10, mb: 4 }}
+        error={false}
+        handleBlur={undefined}
+        touched={false}
+      />
     </ThemeProvider>
   );
 }

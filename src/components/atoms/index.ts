@@ -9,3 +9,4 @@ export { default as Password } from "./Password";
 export { default as DateField } from "./DateField";
 export { default as CurpField } from "./CurpField";
 export { default as TitleMain } from "./typography/TitleMain";
+export { default as CurrencyFieldIcon } from "./CurrencyFieldIcon";
